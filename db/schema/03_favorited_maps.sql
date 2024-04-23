@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS favorited_maps CASCADE;
+
+CREATE TABLE favorited_maps (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE
+);

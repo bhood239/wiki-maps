@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS maps CASCADE;
+
+CREATE TABLE maps (
+  id SERIAL PRIMARY KEY,
+  creator_id INTEGER REFERENCES users(id) NOT NULL,
+  name VARCHAR(255),
+  description TEXT
+);
