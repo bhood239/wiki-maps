@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS images CASCADE;
+
+CREATE TABLE images (
+  id SERIAL PRIMARY KEY,
+  pin_id INTEGER REFERENCES pins(id) ON DELETE CASCADE,
+  image_url VARCHAR(255) NOT NULL,
+  description TEXT,
+  is_thumbnail BOOLEAN DEFAULT FALSE
+);
