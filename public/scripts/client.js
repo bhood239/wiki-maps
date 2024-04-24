@@ -3,16 +3,10 @@
 
 $(() => {
   // If logged in, show options visible only to an authenticated user
-  checkLoggedIn()
-    .then((isLoggedIn) => {
-      if (isLoggedIn) {
-        $('.heart').show();
-        $('#map-options-toggle').show();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (checkLoggedIn()) {
+    $('.heart').show();
+    $('#map-options-toggle').show();
+  }
 
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
@@ -95,21 +89,19 @@ const createMap = (map) => {
 
 const loadLoginPage = () => {
   // If logged in, load menu-options, if not, load login page
-  checkLoggedIn()
-    .then((isLoggedIn) => {
-      if (isLoggedIn) {
-        if ($('.user-options').is(':visible')) {
-          $('.user-options').slideUp();
-        } else {
-          $('.user-options').slideDown();
-        }
-      } else {
-        $('.container').load('login-page.html');
-      }
-    });
+  if (checkLoggedIn()) {
+    if ($('.user-options').is(':visible')) {
+      $('.user-options').slideUp();
+    } else {
+      $('.user-options').slideDown();
+    }
+  } else {
+    $('.container').load('login-page.html');
+  }
 };
 
 function loadRegisterPage() {
+  console.log('Loading register page...');
   $('.container').load('register-page.html');
 }
 
@@ -169,42 +161,33 @@ function logout() {
 }
 
 function checkLoggedIn() {
-  return $.get({ url: '/check_login' })
-    .then((response) => {
-      if (response.logged_in) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  // check if 'loggedIn' cookie exists
+  if ($.cookie('name')) {
+    // User is logged in
+    return true;
+  } else {
+    // User is not logged in
+    return false;
+  }
 }
 
-function loadProfile() {
-  checkLoggedIn()
-    .then((isLoggedIn) => {
-      if (isLoggedIn) {
-        $('.container').load('profile.html');
-        $.get({ url: '/profile' })
-          .then((res) => {
-            // prepend image url to profile picture
-            $('#profile-picture').prepend(res.image);
-            // prepend user name to profile name
-            $('#profile-name').prepend(res.name);
-            // prepend the number of favourite maps
-            $('#favourite-maps-count').prepend(res.favMapsCount);
-            // prepend the number of contributed maps
-            $('#contributed-maps-count').prepend(res.conMapsCount);
-            // prepend the list of favourite maps
-            $('#favourite-maps').prepend(res.favMaps);
-            // prepend the number of contributed maps
-            $('#contributed-maps').prepend(res.conMaps);
-          })
-      }
-    });
-
+function loadProfile(id) {
+  $('.container').load('profile.html');
+  $.get({ url: '/profile', data: id })
+    .then((res) => {
+      // prepend image url to profile picture
+      $('#profile-picture').prepend(res.image);
+      // prepend user name to profile name
+      $('#profile-name').prepend(res.name);
+      // prepend the number of favourite maps
+      $('#favourite-maps-count').prepend(res.favMapsCount);
+      // prepend the number of contributed maps
+      $('#contributed-maps-count').prepend(res.conMapsCount);
+      // prepend the list of favourite maps
+      $('#favourite-maps').prepend(res.favMaps);
+      // prepend the number of contributed maps
+      $('#contributed-maps').prepend(res.conMaps);
+    })
 }
 
 function getMapOptions() {
