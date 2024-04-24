@@ -1,14 +1,8 @@
-#login-form {
+#register-form {
   display: flex;
   flex-direction: column;
   height: 200px;
   justify-content: center;
   align-items: center;
   top: 120px;
-  div {
-    display: flex;
-    button {
-      margin: 0 15px 0 15px;
-    }
-  }
 }

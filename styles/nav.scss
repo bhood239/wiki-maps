@@ -6,32 +6,31 @@ nav {
   justify-content: center;
   align-items: center;
   background-color: gray;
+  .menu {
+    position: fixed;
+    left: 30px;
+    cursor: pointer;
+  }
+  .nav-title {
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  #user-toggle {
+    position: fixed;
+    right: 30px;
+    cursor: pointer;
+  }
 }
 
-.menu {
-  position: fixed;
-  left: 30px;
-  cursor: pointer;
-}
 
-
-.nav-title {
-  display: flex;
-  justify-content: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-#user-toggle {
-  position: fixed;
-  right: 30px;
-  cursor: pointer;
-}
 
 .menu-items {
   display: none;
-  width: 50%;
-  top: 60px;
-  position: relative;
+  width: 80%;
+  height: 100vh;
+  top: 80px;
+  position: fixed;
   padding-left: 20px;
   list-style-type: none;
   background-color: aliceblue;
@@ -39,6 +38,11 @@ nav {
   li {
     display: flex;
     justify-content: space-between;
+    padding: 20px;
+    background-color: cadetblue;
+    &:hover {
+      background-color: slategrey;
+    }
     .heart {
       display: none;
       cursor: pointer;
@@ -46,9 +50,7 @@ nav {
   }
 }
 
-
-
-
+// style when heart is clicked
 .clicked {
   color: red;
 }
