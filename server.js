@@ -48,6 +48,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/map', (req, res) => {
+  res.render('map', {api_key: process.env.GOOGLE_MAPS_API});
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
