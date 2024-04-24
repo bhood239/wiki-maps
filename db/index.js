@@ -17,7 +17,7 @@ const usernames = [];
 pool.query('SELECT username FROM users;')
   .then((result) => (
     result.rows.forEach(i => usernames.push(i.username))))
-  .finally((result) => {
+  .finally(() => {
     console.log('Current usernames:');
     console.log(usernames);
   });
