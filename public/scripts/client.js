@@ -164,6 +164,7 @@ function loadProfile() {
 }
 
 function getMapOptions() {
+  // close if visible
   if ($('.map-options').is(':visible')) {
     $('.map-options').slideUp();
   } else {
