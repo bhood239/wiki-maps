@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const apiKey = process.env.GOOGLE_MAPS_API;
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -51,7 +52,7 @@ app.use('/register', registerRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {apiKey});
 });
 
 app.listen(PORT, () => {
