@@ -40,14 +40,58 @@ function changeIconColor() {
   // Check if the icon already has the 'clicked' class
   if ($(this).hasClass('clicked')) {
     // If it does, remove the 'clicked' class to revert to the previous color
-    // Send POST request to remove the map from favourite maps
     $(this).removeClass('clicked');
+    // Check the id of the icon which is map id
+    const mapId = $(this).attr('id');
+    // send a POST request to '/favMaps' to remove the map_id from favourites table
+    $.post({ url: '/favMaps', data: mapId })
+      .then((res) => {
+        console.log('Removed from favourites.');
+      })
+      .catch((err) => {
+        console.log('An error occured. Try again later.');
+      });
   } else {
     // If it doesn't, add the 'clicked' class to change the color to red
-    // Send POST request to add the map to favourite maps
     $(this).addClass('clicked');
+    // Check the id of the icon which is map id
+    const mapId = $(this).attr('id');
+    // send a POST request to '/favMaps' to add the map_id to favourites table
+    $.post({ url: '/favMaps', data: mapId })
+      .then((res) => {
+        console.log('Added to favourites.');
+      })
+      .catch((err) => {
+        console.log('An error occured. Try again later.');
+      });
   }
 }
+
+// Function to load maps in the menu options
+function loadMaps() {
+  // clear the element to avoid duplicate maps
+  $('.menu-items').empty();
+  // Make Ajax GET request
+  $.get('/map')
+    .then((map) => {
+      $map = createMap(map);
+      // takes return value and appends it to menu-options
+      $('.menu-options').prepend($map);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+// Function to create map
+const createMap = (map) => {
+  // Using .text() method to avoid XSS
+  const $map = $('<li>').addClass('map-name').text(map.name);
+  const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
+  // giving heart icon an 'id' to use to add/remove fav maps with that id
+  const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
+  $map.append($heart);
+};
 
 const loadLoginPage = () => {
   // If logged in, load menu-options, if not, load login page
