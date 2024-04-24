@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   req.session.user = "";
-  res.redirect('../');
+  res.send('Success');
 });
 
 module.exports = router;
