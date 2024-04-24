@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
     // Set user cookie
     req.session.user = storedUser.cookie_id;
     console.log('login success for ' + username);
-    res.redirect('../'); // Change to map screen later
+    res.status(200).send('Success'); // Send 'Success' to ajax
   } else {
     res.status(401).send('Invalid username or password given');
   }
