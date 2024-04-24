@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "local": "./node_modules/.bin/nodemon -L --ignore public/",
+    "styles-watch": "sass sass:public/styles --watch --poll --no-source-map",
     "db:reset": "node bin/resetdb.js"
   },
   "author": "Lighthouse Labs",

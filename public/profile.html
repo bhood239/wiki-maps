@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+
+  <!-- css for font -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      background-color: #ed8d00;
+      background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+    }
+
+    #profile-picture {
+      height: 80px;
+      padding: 5px;
+    }
+
+    #profile-name {
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 5px;
+    }
+
+    .profile-maps {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border: #e88100 2px solid;
+      height: 50px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .edit-logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    #favourite-maps {
+      background-color: darksalmon;
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="edit-logo">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </div>
+    <div id="edit-profile">
+      <!-- Add a form to edit and a edit button to submit -->
+    </div>
+    <div>
+      <!-- prepend profile image here -->
+      <img id="profile-picture" src="images/profile-pic.png" alt="Profile Picture">
+    </div>
+    <div id="profile-name">
+      <!-- prepend profile name here -->
+      User Name
+    </div>
+  </div>
+
+  <div class="profile-maps">
+
+    <label for="favourite-maps">
+      <div id="favourite-maps-count" name="favourite-maps">
+        <!-- prepend number of favourite maps here -->
+      </div>
+      <div>Favourite Maps</div>
+    </label>
+
+    <label for="contributed-maps">
+      <div id="contributed-maps-count" name="contributed-maps">
+        <!-- prepend number of contributed maps here -->
+      </div>
+      <div>Contributed Maps</div>
+    </label>
+
+  </div>
+
+  <div>
+    <div id="favourite-maps">
+      <!-- prepend favourite maps here -->
+    </div>
+    <div id="contributed-maps">
+      <!-- prepend contributed maps here -->
+    </div>
+  </div>
+
+</body>
+
+</html>
