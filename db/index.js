@@ -12,14 +12,16 @@ const query = (query, params, callback) => {
   return pool.query(query, params, callback);
 };
 
-// Populate usernames table with existing usernames
-const usernames = [];
-pool.query('SELECT username FROM users;')
-  .then((result) => (
-    result.rows.forEach(i => usernames.push(i.username))))
+// Populate userData object with existing db
+const userData = {};
+pool.query('SELECT username, password, cookie_id FROM users;')
+  .then((result) => {
+    console.log(result.rows);
+    result.rows.forEach(i => userData[i.username] = i);
+  })
   .finally(() => {
-    console.log('Current usernames:');
-    console.log(usernames);
+    console.log('Current userData:');
+    console.log(userData);
   });
 
-module.exports = { pool, query, usernames };
+module.exports = { pool, query, userData };

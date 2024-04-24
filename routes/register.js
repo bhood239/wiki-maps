@@ -35,26 +35,26 @@ router.post('/', (req, res) => {
     return;
   }
 
-  if (db.usernames.includes(username)) {
+  if (db.userData[username]) {
     res.status(405).send("Username already in use");
     return;
   }
 
   // 3 Sign in user
   const cookie = uuidv4();
-  res.session.user = cookie;
-  res.redirect('/users/username');
+  req.session.user = cookie;
 
-  // 4 Generate user in db (Must be last because async)
+  res.redirect('../'); // Change to map screen later
+
+  // 4 Add user in dbs (Must be last because async)
+  const storedUser = db.userData[username];
+  storedUser.username = username;
+  storedUser.password = password;
+  storedUser.cookie_id = cookie;
+
   return db.query(
     `INSERT INTO users (username, password, cookie_id)
-      VALUES ($1, $2, $3)
-      RETURNING *`, [username, password, cookie])
-    .then((result) => {
-      db.usernames.push(result.rows[0].username);
-      console.log('returning result:' + JSON.stringify(result.rows));
-      return result.rows;
-    });
+      VALUES ($1, $2, $3)`, [username, password, cookie]);
 });
 
 
