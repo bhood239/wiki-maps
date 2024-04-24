@@ -12,4 +12,14 @@ const query = (query, params, callback) => {
   return pool.query(query, params, callback);
 };
 
-module.exports = { pool, query };
+// Populate usernames table with existing usernames
+const usernames = [];
+pool.query('SELECT username FROM users;')
+  .then((result) => (
+    result.rows.forEach(i => usernames.push(i.username))))
+  .finally((result) => {
+    console.log('Current usernames:');
+    console.log(usernames);
+  });
+
+module.exports = { pool, query, usernames };
