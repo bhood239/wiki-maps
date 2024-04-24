@@ -39,6 +39,7 @@
       border: #e88100 2px solid;
       height: 50px;
       margin-top: 2px;
+      margin-bottom: 2px;
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
@@ -47,6 +48,12 @@
       top: 20px;
       right: 20px;
       cursor: pointer;
+    }
+
+    #favourite-maps {
+      background-color: darksalmon;
+      width: 100%;
+      height: 100vh;
     }
   </style>
 </head>
@@ -72,14 +79,14 @@
   <div class="profile-maps">
 
     <label for="favourite-maps">
-      <div name="favourite-maps">
+      <div id="favourite-maps-count" name="favourite-maps">
         <!-- prepend number of favourite maps here -->
       </div>
       <div>Favourite Maps</div>
     </label>
 
     <label for="contributed-maps">
-      <div name="contributed-maps">
+      <div id="contributed-maps-count" name="contributed-maps">
         <!-- prepend number of contributed maps here -->
       </div>
       <div>Contributed Maps</div>
