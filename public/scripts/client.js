@@ -2,13 +2,27 @@
 
 
 $(() => {
+  // If logged in, show options visible only to an authenticated user
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        $('.heart').show();
+        $('#map-options-toggle').show();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
+  $('#register').on('click', loadRegisterPage);
+  $('#register-form').on('submit', register);
   $('#login-form').on('submit', login);
   $('#logout').on('click', logout);
   $('.profile').on('click', loadProfile);
-  $('.map-options-toggle').on('click', getMapOptions);
+  $('#map-options-toggle').on('click', getMapOptions);
 
 
 });
@@ -51,12 +65,32 @@ const loadLoginPage = () => {
     });
 };
 
-function login(event) {
+function loadRegisterPage() {
+  $('.container').load('register-page.html');
+}
+
+function register(event) {
   // Prevents default from submission
   event.preventDefault();
 
-  // Serialize form data
-  const formData = $(this).serialize();
+  // Take the username and password values
+  const username = $('#username').val();
+  const password = $('#password').val();
+
+  //Make AJAX POST request
+  $.post({ url: '/register', data: { username, password } })
+    .then((res) => {
+      // Redirect to home page
+      window.location.href = 'index.html';
+    })
+    .catch((err) => {
+      alert('An error occured. Please try again.');
+    });
+}
+
+function login(event) {
+  // Prevents default from submission
+  event.preventDefault();
 
   // Take the username and password values
   const username = $('#username').val();
@@ -110,20 +144,20 @@ function loadProfile() {
       if (isLoggedIn) {
         $('.container').load('profile.html');
         $.get({ url: '/profile' })
-        .then((res) => {
-          // prepend image url to profile picture
-          $('#profile-picture').prepend(res.image);
-          // prepend user name to profile name
-          $('#profile-name').prepend(res.name);
-          // prepend the number of favourite maps
-          $('#favourite-maps-count').prepend(res.favMapsCount);
-          // prepend the number of contributed maps
-          $('#contributed-maps-count').prepend(res.conMapsCount);
-          // prepend the list of favourite maps
-          $('#favourite-maps').prepend(res.favMaps);
-          // prepend the number of contributed maps
-          $('#contributed-maps').prepend(res.conMaps);
-        })
+          .then((res) => {
+            // prepend image url to profile picture
+            $('#profile-picture').prepend(res.image);
+            // prepend user name to profile name
+            $('#profile-name').prepend(res.name);
+            // prepend the number of favourite maps
+            $('#favourite-maps-count').prepend(res.favMapsCount);
+            // prepend the number of contributed maps
+            $('#contributed-maps-count').prepend(res.conMapsCount);
+            // prepend the list of favourite maps
+            $('#favourite-maps').prepend(res.favMaps);
+            // prepend the number of contributed maps
+            $('#contributed-maps').prepend(res.conMaps);
+          })
       }
     });
 
