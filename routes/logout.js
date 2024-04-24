@@ -10,8 +10,12 @@ router.use(cookieSession({
 }));
 
 router.get('/', (req, res) => {
+  res.send('Please use POST');
+});
+
+router.post('/', (req, res) => {
   req.session.user = "";
-  res.redirect('../'); // Send to index if not POST
+  res.redirect('../');
 });
 
 module.exports = router;
