@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
   const {username, password} = req.body;
   const storedUser = db.userData[username];
 
-  if (storedUser && (storedUser.password = password)) {
+  if (storedUser && (storedUser.password === password)) {
     // Set user cookie
     req.session.user = storedUser.cookie_id;
     console.log('login success for ' + username);
