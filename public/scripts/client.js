@@ -3,19 +3,20 @@
 
 $(() => {
   // If logged in, show options visible only to an authenticated user
-  if (checkLoggedIn()) {
-    $('.heart').show();
-    $('#map-options-toggle').show();
-  }
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        $('.heart').show();
+        $('#map-options-toggle').show();
+      }
+    });
 
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
   $('#register').on('click', loadRegisterPage);
-  $('#register-form').on('submit', register);
-  $('#login-form').on('submit', login);
   $('#logout').on('click', logout);
-  $('.profile').on('click', loadProfile);
+  $('#profile').on('click', loadProfile);
   $('#map-options-toggle').on('click', getMapOptions);
 
 
@@ -105,49 +106,51 @@ function loadRegisterPage() {
   $('#map').load('register-page.html');
 }
 
-function register(event) {
-  // Prevents default from submission
-  event.preventDefault();
+// function register(event) {
+//   // Prevents default from submission
+//   event.preventDefault();
 
-  // Take the username and password values
-  const username = $('#username').val();
-  const password = $('#password').val();
+//   // Take the username and password values
+//   const username = $('#username').val();
+//   const password = $('#password').val();
 
-  //Make AJAX POST request
-  $.post({ url: '/register', data: { username, password } })
-    .then((res) => {
-      // Redirect to home page
-      window.location.href = 'index.html';
-    })
-    .catch((err) => {
-      alert('An error occured. Please try again.');
-    });
-}
 
-function login(event) {
-  // Prevents default from submission
-  event.preventDefault();
+//   //Make AJAX POST request
+//   $.post({ url: '/register', data: { username, password } })
+//     .then((res) => {
+//       // Redirect to home page
+//       window.location.href = 'index.html';
+//     })
+//     .catch((err) => {
+//       alert('An error occured. Please try again.');
+//     });
+// }
 
-  // Take the username and password values
-  const username = $('#username').val();
-  const password = $('#password').val();
+// function login(event) {
+//   console.log('123');
+//   // Prevents default from submission
+//   // event.preventDefault();
 
-  //Make AJAX POST request
-  $.post({ url: '/login', data: { username, password } })
-    .then((res) => {
-      // check if data is true
-      if (res === 'Success') {
-        // Redirect to home page
-        window.location.href = 'index.html';
-      } else {
-        // Display error message
-        alert('Login failed. Please try again.');
-      }
-    })
-    .catch((err) => {
-      alert('An error occured. Please try again.');
-    });
-}
+//   // Take the username and password values
+//   const username = $('#username').val();
+//   const password = $('#password').val();
+
+//   //Make AJAX POST request
+//   $.post( '/login', { username, password } )
+//     .then((res) => {
+//       // check if data is true
+//       if (res === 'Success') {
+//         // Redirect to home page
+//         window.location.href = 'index.html';
+//       } else {
+//         // Display error message
+//         alert('Login failed. Please try again.');
+//       }
+//     })
+//     .catch((err) => {
+//       alert('An error occured. Please try again.');
+//     });
+// }
 
 function logout() {
   $.post({ url: '/logout' })
@@ -161,33 +164,33 @@ function logout() {
 }
 
 function checkLoggedIn() {
-  // check if 'loggedIn' cookie exists
-  if ($.cookie('user')) {
-    // User is logged in
-    return true;
-  } else {
-    // User is not logged in
-    return false;
-  }
+  return $.get('/check-login')
+    .then((res) => {
+      if (res) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 }
 
-function loadProfile(id) {
+function loadProfile() {
   $('#map').load('profile.html');
-  $.get({ url: '/profile', data: id })
-    .then((res) => {
-      // prepend image url to profile picture
-      $('#profile-picture').prepend(res.image);
-      // prepend user name to profile name
-      $('#profile-name').prepend(res.name);
-      // prepend the number of favourite maps
-      $('#favourite-maps-count').prepend(res.favMapsCount);
-      // prepend the number of contributed maps
-      $('#contributed-maps-count').prepend(res.conMapsCount);
-      // prepend the list of favourite maps
-      $('#favourite-maps').prepend(res.favMaps);
-      // prepend the number of contributed maps
-      $('#contributed-maps').prepend(res.conMaps);
-    })
+  // $.get({ url: '/profile', data: id })
+  //   .then((res) => {
+  //     // prepend image url to profile picture
+  //     $('#profile-picture').prepend(res.image);
+  //     // prepend user name to profile name
+  //     $('#profile-name').prepend(res.name);
+  //     // prepend the number of favourite maps
+  //     $('#favourite-maps-count').prepend(res.favMapsCount);
+  //     // prepend the number of contributed maps
+  //     $('#contributed-maps-count').prepend(res.conMapsCount);
+  //     // prepend the list of favourite maps
+  //     $('#favourite-maps').prepend(res.favMaps);
+  //     // prepend the number of contributed maps
+  //     $('#contributed-maps').prepend(res.conMaps);
+  //   })
 }
 
 function getMapOptions() {
