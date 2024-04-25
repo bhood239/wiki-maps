@@ -1,14 +1,16 @@
 // See: https://sass-lang.com/
 
-.container {
+#map {
   position: relative;
+  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   top: 60px;
 }
 
 #map-options-toggle {
-  // display: none;
+  display: none;
   position: absolute;
   top: 100px;
   right: 40px;

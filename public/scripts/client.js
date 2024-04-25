@@ -96,13 +96,13 @@ const loadLoginPage = () => {
       $('.user-options').slideDown();
     }
   } else {
-    $('.container').load('login-page.html');
+    $('#map').load('login-page.html');
   }
 };
 
 function loadRegisterPage() {
   console.log('Loading register page...');
-  $('.container').load('register-page.html');
+  $('#map').load('register-page.html');
 }
 
 function register(event) {
@@ -136,7 +136,7 @@ function login(event) {
   $.post({ url: '/login', data: { username, password } })
     .then((res) => {
       // check if data is true
-      if (res === 'success') {
+      if (res === 'Success') {
         // Redirect to home page
         window.location.href = 'index.html';
       } else {
@@ -162,7 +162,7 @@ function logout() {
 
 function checkLoggedIn() {
   // check if 'loggedIn' cookie exists
-  if ($.cookie('name')) {
+  if ($.cookie('user')) {
     // User is logged in
     return true;
   } else {
@@ -172,7 +172,7 @@ function checkLoggedIn() {
 }
 
 function loadProfile(id) {
-  $('.container').load('profile.html');
+  $('#map').load('profile.html');
   $.get({ url: '/profile', data: id })
     .then((res) => {
       // prepend image url to profile picture
