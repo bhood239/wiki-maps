@@ -1,9 +1,11 @@
+
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 200px;
+  width: 100%;
   background-color: #ed8d00;
   background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
 }
@@ -37,7 +39,5 @@
 }
 
 #favourite-maps {
-  background-color: darksalmon;
-  width: 100%;
-  height: 100vh;
+
 }
