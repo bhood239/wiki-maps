@@ -38,7 +38,6 @@ async function initMap(mapCoords, pins) {
   }
 };
 
-
 initMap({lat: 50.113123, lng: -122.953864}, [
   { coords: {lat: 50.117045, lng: -122.946385}, content:'<h1>Coffee Shop</h1>'},
   { coords: {lat: 50.114947, lng: -122.958227}, content:'<h1>Coffee Shop</h1>'}
