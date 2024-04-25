@@ -1,4 +1,3 @@
-
 // Function to add a pin to the map
 async function addPin(map, props) {
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
