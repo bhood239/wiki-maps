@@ -14,7 +14,6 @@ $(() => {
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
-  $('#register').on('click', loadRegisterPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
   $('#map-options-toggle').on('click', getMapOptions);
@@ -90,15 +89,18 @@ const createMap = (map) => {
 
 const loadLoginPage = () => {
   // If logged in, load menu-options, if not, load login page
-  if (checkLoggedIn()) {
-    if ($('.user-options').is(':visible')) {
-      $('.user-options').slideUp();
+  checkLoggedIn()
+  .then((isLoggedIn) => {
+    if (isLoggedIn) {
+      if ($('.user-options').is(':visible')) {
+        $('.user-options').slideUp();
+      } else {
+        $('.user-options').slideDown();
+      }
     } else {
-      $('.user-options').slideDown();
+      $('#map').load('login-page.html');
     }
-  } else {
-    $('#map').load('login-page.html');
-  }
+  });
 };
 
 function loadRegisterPage() {
