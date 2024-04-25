@@ -1,5 +1,6 @@
 $(() => {
   $('#login-form').on('submit', login);
+  $('#register').on('click', loadRegisterPage);
 });
 
 function login(event) {
