@@ -21,6 +21,7 @@ router.post('/', (req, res) => {
   if (storedUser && (storedUser.password === password)) {
     // Set user cookie
     req.session.user = storedUser.cookie_id;
+    req.session.userId = storedUser.id;
     console.log('login success for ' + username);
     res.status(200).send('Success'); // Send 'Success' to ajax
   } else {

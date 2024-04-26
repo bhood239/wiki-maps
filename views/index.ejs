@@ -15,7 +15,10 @@
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/container.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/map.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/map.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/login.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/register.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
 
   <!-- External JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,6 +29,8 @@
 
   <!-- App JS -->
   <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/clientLogin.js"></script>
+  <script type="text/javascript" src="/scripts/clientRegister.js"></script>
   <!-- <script type="text/javascript" src="/scripts/maps/maps-api.js"></script> -->
 
 </head>
@@ -43,14 +48,15 @@
     </div>
   </nav>
   <main>
-    <section>
+    <section class="map-container">
       <div>
         <ul class="menu-items">
           <!-- Menu items will be prepended here -->
         </ul>
       </div>
-      <span id="map-options-toggle"><i class="fa-solid fa-ellipsis"></i></span>
-      <%- include('partials/map.ejs') %>
+      <div id="map">
+        <span id="map-options-toggle"><i class="fa-solid fa-ellipsis"></i></span>
+        <%- include('partials/maps.ejs') %>
         <!-- Different Pages load here on click -->
       </div>
       <div class="user-options">
@@ -64,6 +70,20 @@
         <p class="delete-point">Remove Point</p>
       </div>
     </section>
+    <section class="hide login-container">
+      <div class="btn-log-reg-container">
+        <button class="btn-login">Login</button>
+        <button class="btn-reg">Register</button>
+      </div>
+      <%- include('partials/login-page.ejs') %>
+      <%- include('partials/register-page.ejs') %>
+    </section>
+    <section class="hide profile-container">
+      <%- include('partials/profile.ejs') %>
+    </section>
+    <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+        ({ key: "<%=apiKey%>", v: "weekly" });</script>
+    <script src="/scripts/maps/maps_api.js"></script>
   </main>
 
 </body>
