@@ -21,8 +21,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { username, password } = req.body;
 
+  const { username, password } = req.body;
   // 1 Redirect to main page if signed in
   if (req.session.user) {
     console.log('Client has a cookie, redirectng to /login');
@@ -46,15 +46,15 @@ router.post('/', (req, res) => {
 
   res.redirect('../'); // Change to map screen later
 
-  // 4 Add user in dbs (Must be last because async)
-  const storedUser = db.userData[username];
-  storedUser.username = username;
-  storedUser.password = password;
-  storedUser.cookie_id = cookie;
-
   return db.query(
     `INSERT INTO users (username, password, cookie_id)
-      VALUES ($1, $2, $3)`, [username, password, cookie]);
+      VALUES ($1, $2, $3)`, [username, password, cookie])
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 });
 
 
