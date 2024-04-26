@@ -8,17 +8,16 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
+const getPins = require('../db/queries/pins');
 
-router.get('/', (req, res) => {
-  userQueries.getUsers()
-    .then(users => {
-      res.json({ users });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+router.get('/', async (req, res) => {
+  try {
+    const pins = await getPins();
+    res.json(pins);
+  } catch (error) {
+    console.error("Error fetching pins:", error);
+    res.status(500).send(error.message);
+  }
 });
 
 module.exports = router;

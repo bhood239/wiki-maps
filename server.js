@@ -36,6 +36,10 @@ app.use(
 );
 app.use(express.static('public'));
 
+
+//require pins and maps from database
+const {getPins} = require('./db/queries/pins');
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
@@ -45,12 +49,14 @@ const usersRoutes = require('./routes/users');
 const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 const registerRoutes = require('./routes/register');
+const pinsApiRoutes = require('./routes/pins-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
+app.use('/api/pins', pinsApiRoutes);
 app.use('/users', usersRoutes);
 
 app.use('/login', loginRoutes);
@@ -63,7 +69,8 @@ app.use('/register', registerRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index', { apiKey });
+  console.log(apiKey);
+  res.render('index', { apiKey});
 });
 
 app.get('/check-login', (req, res) => {
