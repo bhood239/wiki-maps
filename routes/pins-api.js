@@ -6,16 +6,21 @@ const pinsQueries = require('../db/queries/pins');
 
 // CREATE - POST /
 router.post('/', (req, res) => {
-  console.log(req.body);
-  res.json({
-    message: 'pin created'
-  })
-})
+  const { lat, lng } = req.body; // Extract lat and lng from request body
+  try {
+    // Use createPin function to insert pin into the database
+    const newPin = pinsQueries.createPin({ lat, lng }, 1);
+    res.status(201).json(newPin); // Send back the created pin as JSON response
+  } catch (error) {
+    console.error('Error creating pin:', error);
+    res.status(500).json({ error: 'Failed to create pin' });
+  }
+});
 
 //READ ALL - GET /
 router.get('/', async (req, res) => {
   try {
-    const pins = await pinsQueries.getPins(1); // change to getPinsByMapId
+    const pins = await pinsQueries.getPinsByMapId(1);
     res.json(pins);
   } catch (error) {
     console.error("Error fetching pins:", error);
@@ -23,10 +28,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-//READ ONE - GET /:id
+//READ FOR ONE MAP - GET /:id
 router.get('/:id', async (req, res) => {
   try {
-    const pin = await pinsQueries.getPinsById(req.params.id);
+    const pin = await pinsQueries.getPinsByMapId(req.params.id);
     res.json({message: 'pin found', pin});
   } catch (error) {
     console.error("Error fetching pin:", error);

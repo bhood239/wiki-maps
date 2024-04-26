@@ -1,5 +1,8 @@
 // map and pin generation functions
 
+let map; // Define map in a scope accessible to the event listener
+
+//LOAD CURRENT PINS FROM DATABASE
 // Function to add a pin to the map
 async function addPin(map, pin) {
   const position = {
@@ -20,6 +23,50 @@ async function addPin(map, pin) {
     });
   }
 };
+
+// SCRIPT FOR USERS TO ADD PINS
+// Function to handle map click event
+function handleMapClick(event) {
+  try {
+    const latLng = {
+      lat: event.latLng.lat(), // Get latitude from click
+      lng: event.latLng.lng() // Get longitude from click
+    };
+    if (map) {
+      placeMarker(latLng, map); // Place marker on the map
+      createPinOnServer(latLng); // Send AJAX request to create pin in the database
+    } else {
+      console.error('Map object is undefined.');
+    }
+  } catch (error) {
+    console.error('Error handling map click:', error);
+  }
+}
+
+// Function to add a new pin marker on the map
+function placeMarker(latLng, map) {
+  new google.maps.Marker({
+    position: latLng,
+    map: map,
+  });
+}
+
+// Function to send AJAX request to create pin on the server
+function createPinOnServer(latLng) {
+  $.ajax({
+    method: 'POST',
+    url: '/api/pins',
+    data: latLng, // Send the latLng data to the server
+    success: function(response) {
+      console.log('Pin created on the server:', response);
+      addPin(map, latLng);
+      // You can update the map or perform other actions based on the response
+    },
+    error: function(error) {
+      console.error('Error creating pin on server:', error);
+    }
+  });
+}
 
 // Function to retrieve map coordinates
 async function fetchMapCoords() {
@@ -46,7 +93,7 @@ async function fetchMapCoords() {
   }
 }
 
-// generate map
+// GENERATE MAP
 async function initMap() {
   try {
     // Fetch map coordinates
@@ -55,7 +102,7 @@ async function initMap() {
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");
 
-    const map = new Map(document.getElementById("map"), {
+    map = new Map(document.getElementById("map"), {
       center: mapCoords, // Centered at retrieved coordinates
       zoom: 13,
       mapId: "4504f8b37365c3d0"
@@ -75,6 +122,13 @@ async function initMap() {
     }
   } catch (error) {
     console.error('Failed to initialize map:', error);
+  }
+
+  // Check if map is defined before adding event listener
+  if (map) {
+    google.maps.event.addListener(map, 'click', handleMapClick);
+  } else {
+    console.error('Map object is undefined.');
   }
 }
 
