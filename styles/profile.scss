@@ -1,3 +1,8 @@
+.profile-container {
+  margin-top: 60px;
+  position: relative;
+  width: 100%;
+}
 
 .header {
   display: flex;
@@ -29,6 +34,29 @@
   margin-top: 2px;
   margin-bottom: 2px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  label {
+    display: flex;
+    align-items: center;
+    #favourite-maps-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      margin: 10px;
+      height: 20px;
+      border: #e88100 1px solid;
+    }
+    #contributed-maps-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      margin: 10px;
+      height: 20px;
+      border: #e88100 1px solid;
+    }
+    cursor: pointer;
+  }
 }
 
 .edit-logo {

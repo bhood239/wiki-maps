@@ -1,16 +1,14 @@
 $(() => {
   $('#login-form').on('submit', login);
-  $('#register').on('click', loadRegisterPage);
 });
 
 function login(event) {
-  console.log('123');
   // Prevents default from submission
   event.preventDefault();
 
   // Take the username and password values
-  const username = $('#username').val();
-  const password = $('#password').val();
+  const username = $('input[name="username"]').val();
+  const password = $('input[name="password"]').val();
 
   //Make AJAX POST request
   $.post( '/login', { username, password } )

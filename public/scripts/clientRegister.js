@@ -7,15 +7,15 @@ function register(event) {
   event.preventDefault();
 
   // Take the username and password values
-  const username = $('#username').val();
-  const password = $('#password').val();
+  const username = $('#register-form').find('input[name="username"]').val();
+  const password = $('#register-form').find('input[name="password"]').val();
 
 
   //Make AJAX POST request
-  $.post({ url: '/register', data: { username, password } })
+  $.post( '/register', { username, password } )
     .then((res) => {
       // Redirect to home page
-      window.location.href = 'index.html';
+      window.location.href = '/';
     })
     .catch((err) => {
       alert('An error occured. Please try again.');

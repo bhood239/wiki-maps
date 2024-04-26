@@ -1,5 +1,9 @@
 // See: https://sass-lang.com/
 
+.map-container {
+  z-index: 1000;
+}
+
 #map {
   position: relative;
   height: 100vh;
@@ -58,4 +62,18 @@
       background-color: blanchedalmond;
     }
   }
+}
+
+.hide {
+  display: none;
+}
+
+.btn-log-reg-container {
+  display: flex;
+  justify-content: center;
+  top: 100 px;
+}
+
+.login-container {
+  padding: 60px;
 }
