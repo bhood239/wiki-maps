@@ -11,12 +11,25 @@ $(() => {
       }
     });
 
+  $('.nav-title').on('click', () => {
+    $('.login-container').addClass('hide');
+    $('.profile-container').addClass('hide');
+    $('.map-container').removeClass('hide')
+  });
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
   $('#map-options-toggle').on('click', getMapOptions);
+  $('.btn-login').click(() => {
+    $('#register-form').addClass('hide');
+    $('#login-form').toggleClass('hide');
+  })
+  $('.btn-reg').click(() => {
+    $('#login-form').addClass('hide');
+    $('#register-form').toggleClass('hide');
+  })
 
 
 });
@@ -90,75 +103,26 @@ const createMap = (map) => {
 const loadLoginPage = () => {
   // If logged in, load menu-options, if not, load login page
   checkLoggedIn()
-  .then((isLoggedIn) => {
-    if (isLoggedIn) {
-      if ($('.user-options').is(':visible')) {
-        $('.user-options').slideUp();
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        if ($('.user-options').is(':visible')) {
+          $('.user-options').slideUp();
+        } else {
+          $('.user-options').slideDown();
+        }
       } else {
-        $('.user-options').slideDown();
+        $('.login-container').toggleClass('hide');
+        $('.map-container').toggleClass('hide');
       }
-    } else {
-      $('#map').load('login-page.html');
-    }
-  });
+    });
 };
 
-function loadRegisterPage() {
-  console.log('Loading register page...');
-  $('#map').load('register-page.html');
-}
-
-// function register(event) {
-//   // Prevents default from submission
-//   event.preventDefault();
-
-//   // Take the username and password values
-//   const username = $('#username').val();
-//   const password = $('#password').val();
-
-
-//   //Make AJAX POST request
-//   $.post({ url: '/register', data: { username, password } })
-//     .then((res) => {
-//       // Redirect to home page
-//       window.location.href = 'index.html';
-//     })
-//     .catch((err) => {
-//       alert('An error occured. Please try again.');
-//     });
-// }
-
-// function login(event) {
-//   console.log('123');
-//   // Prevents default from submission
-//   // event.preventDefault();
-
-//   // Take the username and password values
-//   const username = $('#username').val();
-//   const password = $('#password').val();
-
-//   //Make AJAX POST request
-//   $.post( '/login', { username, password } )
-//     .then((res) => {
-//       // check if data is true
-//       if (res === 'Success') {
-//         // Redirect to home page
-//         window.location.href = 'index.html';
-//       } else {
-//         // Display error message
-//         alert('Login failed. Please try again.');
-//       }
-//     })
-//     .catch((err) => {
-//       alert('An error occured. Please try again.');
-//     });
-// }
 
 function logout() {
   $.post({ url: '/logout' })
     .then((res) => {
       // Redirect to home page
-      window.location.href = 'index.html';
+      window.location.href = '/';
     })
     .catch((err) => {
       alert('An error occured. Please try again.');
@@ -177,22 +141,33 @@ function checkLoggedIn() {
 }
 
 function loadProfile() {
-  $('#map').load('profile.html');
-  // $.get({ url: '/profile', data: id })
-  //   .then((res) => {
-  //     // prepend image url to profile picture
-  //     $('#profile-picture').prepend(res.image);
-  //     // prepend user name to profile name
-  //     $('#profile-name').prepend(res.name);
-  //     // prepend the number of favourite maps
-  //     $('#favourite-maps-count').prepend(res.favMapsCount);
-  //     // prepend the number of contributed maps
-  //     $('#contributed-maps-count').prepend(res.conMapsCount);
-  //     // prepend the list of favourite maps
-  //     $('#favourite-maps').prepend(res.favMaps);
-  //     // prepend the number of contributed maps
-  //     $('#contributed-maps').prepend(res.conMaps);
-  //   })
+  $('.profile-container').removeClass('hide');
+  $('.map-container').toggleClass('hide');
+
+  // const id = this.id;
+  $.get('/profile')
+    .then((res) => {
+      // prepend image url to profile picture
+      $('#profile-picture').prepend('<img src="' + res.image + '" alt="Profile Picture">');
+      // prepend user name to profile name
+      $('#profile-name').prepend('<h1>' + res.name + '</h1>');
+      // prepend the number of favourite maps
+      $('#favourite-maps-count').append('<p>' + res.favMapsCount + '</p>');
+      // prepend the number of contributed maps
+      $('#contributed-maps-count').append('<p>' + res.conMapsCount + '</p>');
+      // Loop through favourite maps and append to list
+      if(res.favMaps){
+      res.favMaps.forEach((map) => {
+        $('#favourite-maps').append('<li>' + map + '</li>');
+      });
+    }
+      // prepend the number of contributed maps
+      // $('#contributed-maps').prepend(res.conMaps);
+    })
+    .catch((error) => {
+      console.error("Error loading profile:", error);
+      // Handle error, display error message, etc.
+    });
 }
 
 function getMapOptions() {

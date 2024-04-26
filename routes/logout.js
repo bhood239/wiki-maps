@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   req.session.user = "";
+  req.session.userId = "";
   res.send('Success');
 });
 

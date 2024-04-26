@@ -52,6 +52,8 @@ const registerRoutes = require('./routes/register');
 const pinsApiRoutes = require('./routes/pins-api');
 const mapsApiRoutes = require('./routes/maps-api');
 
+const profileRoutes = require('./routes/profile');
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -64,6 +66,8 @@ app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/register', registerRoutes);
+
+app.use('/profile', profileRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -77,7 +81,6 @@ app.get('/', (req, res) => {
 
 app.get('/check-login', (req, res) => {
   const userID = req.session['user'];
-  console.log('checklogin');
   if (userID) {
     res.send(true);
   } else {
