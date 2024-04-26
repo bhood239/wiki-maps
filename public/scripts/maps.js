@@ -1,27 +1,25 @@
+// map and pin generation functions
+
 // Function to add a pin to the map
-async function addPin(map, coords) {
+async function addPin(map, pin) {
   const position = {
-    lat: Number(coords.lat),
-    lng: Number(coords.lng)
+    lat: Number(pin.lat),
+    lng: Number(pin.lng)
   }
-  new google.maps.Marker({position, map});
+  const marker = new google.maps.Marker({ position, map });
 
   // Check if content exists for InfoWindow
-  // if (content) {
-  //   const infoWindow = new google.maps.InfoWindow({
-  //     content: props.content
-  //   });
+  if (pin.content) {
+    const infoWindow = new google.maps.InfoWindow({
+      content: pin.content
+    });
 
     // Open InfoWindow when marker is clicked
-  //   marker.addListener('click', function() {
-  //     infoWindow.open(map, marker);
-  //   });
-  // }
+    marker.addListener('click', function() {
+      infoWindow.open(map, marker);
+    });
+  }
 };
-
-// generate map function
-// - mapCoords must be an object with keys of lat and lng
-// - pins must be an object containing coords as an object with lat and lng and content
 
 // Function to retrieve map coordinates
 async function fetchMapCoords() {
@@ -48,7 +46,7 @@ async function fetchMapCoords() {
   }
 }
 
-// Define initMap as an async function
+// generate map
 async function initMap() {
   try {
     // Fetch map coordinates

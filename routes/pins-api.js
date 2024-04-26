@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
 //READ ALL - GET /
 router.get('/', async (req, res) => {
   try {
-    const pins = await pinsQueries.getPins(); // change to getPinsByMapId
+    const pins = await pinsQueries.getPins(1); // change to getPinsByMapId
     res.json(pins);
   } catch (error) {
     console.error("Error fetching pins:", error);
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 //READ ONE - GET /:id
 router.get('/:id', async (req, res) => {
   try {
-    const pin = await getPinById(req.params.id);
+    const pin = await pinsQueries.getPinsById(req.params.id);
     res.json({message: 'pin found', pin});
   } catch (error) {
     console.error("Error fetching pin:", error);
