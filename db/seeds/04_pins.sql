@@ -2,8 +2,8 @@ INSERT INTO
   pins (
     user_id,
     map_id,
-    x_coordinate,
-    y_coordinate,
+    lat,
+    lng,
     title,
     description
   )
