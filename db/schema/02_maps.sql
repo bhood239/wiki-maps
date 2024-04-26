@@ -4,5 +4,7 @@ CREATE TABLE maps (
   id SERIAL PRIMARY KEY,
   creator_id INTEGER REFERENCES users(id) NOT NULL,
   name VARCHAR(255),
-  description TEXT
+  description TEXT,
+  lat DECIMAL(9,6) NOT NULL,
+  lng DECIMAL(9,6) NOT NULL
 );
