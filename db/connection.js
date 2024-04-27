@@ -13,4 +13,8 @@ const db = new Pool(dbParams);
 
 db.connect();
 
+const query = (query, params, callback) => {
+  return pool.query(query, params, callback);
+};
+
 module.exports = db;
