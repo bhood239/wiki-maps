@@ -18,12 +18,7 @@ router.post('/', (req, res) => {
   const lat = req.body.lat;
   const lng = req.body.lng;
 
-  return db.query('INSERT INTO maps (creator_id, name, description, lat, lng) VALUES ($1, $2, $3, $4, $5) RETURNING *', [userId, name, description, lat, lng])
-    .then(data => {
-      console.log(data.rows[0]);
-      res.status(200).send('Success');
-      return;
-    });
+  createMap(userId, name, description, lat, lng);
 });
 
 //READ ALL - GET /
