@@ -2,15 +2,13 @@ const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 const db = require('../db/connection');
-
+const validCookies = require('../db/validCookies');
 // PINS CRUD REST API
 
 // CREATE - POST /
 router.post('/', (req, res) => {
-  console.log('userid:' + req.session.userId);
-  console.log('cookie:' + req.session.user);
-  if (!req.session.user || !req.session.userId) {
-    res.status(401).send('Not logged in');
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
     return;
   }
 
@@ -63,6 +61,10 @@ router.get('/1', async (req, res) => {
 
 //UPDATE - POST /:id
 router.post('/maps/:id', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
   console.log(req.body);
   res.json({
     message: 'pin updated'
@@ -71,6 +73,10 @@ router.post('/maps/:id', (req, res) => {
 
 //DELETE - POST /:id/delete
 router.post('/maps/:id/delete', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
   res.json({
     message: 'pin deleted'
   })
