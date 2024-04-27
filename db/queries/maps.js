@@ -15,4 +15,12 @@ const getMapById = (id) => {
   });
 };
 
-module.exports = { getMaps, getMapById };
+const getMapsList = () => {
+  return db.query('SELECT id, lat, lng, name, description FROM maps;'
+    )
+    .then(data => {
+      return data.rows;
+    });
+};
+
+module.exports = { getMaps, getMapById, getMapsList };
