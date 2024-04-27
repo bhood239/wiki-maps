@@ -113,15 +113,15 @@ const renderMaps = (maps) => {
 // Function to create map
 const createMap = (map) => {
   console.log('createmap', map);
-  // Using .text() method to avoid XSS
-  const $mapButton = $('<button>').addClass('map-name').text(map.name);
+
+  const $mapItem = $('<li>').addClass('map-name').text(map.name); // Create list item
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
-  // Giving heart icon an 'id' to use to add/remove fav maps with that id
+  // giving heart icon an 'id' to use to add/remove fav maps with that id
   const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
-  $mapButton.append($heart);
+  $mapItem.append($heart);
 
   // Attach click event to the map button to initialize the map
-  $mapButton.on('click', async function() {
+  $mapItem.on('click', async function() {
     try {
       await initMap(map.id); // Initialize map with the clicked map ID
     } catch (error) {
@@ -129,7 +129,7 @@ const createMap = (map) => {
     }
   });
 
-  return $mapButton;
+  return $mapItem;
 };
 
 const loadLoginPage = () => {
