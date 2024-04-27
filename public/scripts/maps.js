@@ -97,7 +97,7 @@ async function fetchMapCoords(id) {
 async function initMap() {
   try {
     // Fetch map coordinates
-    const mapCoords = await fetchMapCoords(1);
+    const mapCoords = await fetchMapCoords();
 
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");
