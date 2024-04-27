@@ -157,6 +157,7 @@ function loadProfile() {
       $('#contributed-maps-count').append('<p>' + res.conMapsCount + '</p>');
       // Loop through favourite maps and append to list
       if(res.favMaps){
+        console.log(res.favMaps);
       res.favMaps.forEach((map) => {
         $('#favourite-maps').append('<li>' + map + '</li>');
       });
