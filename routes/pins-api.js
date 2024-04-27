@@ -1,11 +1,17 @@
 const express = require('express');
 const router  = express.Router();
 const pinsQueries = require('../db/queries/pins');
+const validCookies = require('../db/validCookies');
 
 // PINS CRUD REST API
 
 // CREATE - POST /
 router.post('/', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
+
   const { lat, lng } = req.body; // Extract lat and lng from request body
   try {
     // Use createPin function to insert pin into the database
@@ -41,6 +47,11 @@ router.get('/:id', async (req, res) => {
 
 //UPDATE - POST /:id
 router.post('/:id', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
+
   console.log(req.body);
   res.json({
     message: 'pin updated'
@@ -49,6 +60,11 @@ router.post('/:id', (req, res) => {
 
 //DELETE - POST /:id/delete
 router.post('/:id/delete', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
+  
   res.json({
     message: 'pin deleted'
   })

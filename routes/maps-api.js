@@ -1,16 +1,30 @@
 const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
-
+const db = require('../db/connection');
+const validCookies = require('../db/validCookies');
 // PINS CRUD REST API
 
 // CREATE - POST /
 router.post('/', (req, res) => {
-  console.log(req.body);
-  res.json({
-    message: 'map created'
-  })
-})
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
+
+  const userId = req.session.userId;
+  const name = req.body.name;
+  const description = req.body.description;
+  const lat = req.body.lat;
+  const lng = req.body.lng;
+
+  return db.query('INSERT INTO maps (creator_id, name, description, lat, lng) VALUES ($1, $2, $3, $4, $5) RETURNING *', [userId, name, description, lat, lng])
+    .then(data => {
+      console.log(data.rows[0]);
+      res.status(200).send('Success');
+      return;
+    });
+});
 
 //READ ALL - GET /
 router.get('/', async (req, res) => {
@@ -36,6 +50,10 @@ router.get('/1', async (req, res) => {
 
 //UPDATE - POST /:id
 router.post('/maps/:id', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
   console.log(req.body);
   res.json({
     message: 'pin updated'
@@ -44,6 +62,10 @@ router.post('/maps/:id', (req, res) => {
 
 //DELETE - POST /:id/delete
 router.post('/maps/:id/delete', (req, res) => {
+  if (!validCookies.includes(req.session.user)) {
+    res.status(405).send('Not authorized');
+    return;
+  }
   res.json({
     message: 'pin deleted'
   })
