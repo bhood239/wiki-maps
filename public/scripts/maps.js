@@ -69,11 +69,11 @@ function createPinOnServer(latLng) {
 }
 
 // Function to retrieve map coordinates
-async function fetchMapCoords() {
+async function fetchMapCoords(id) {
   try {
     const map = await $.ajax({
       method: 'GET',
-      url: 'api/maps/1'
+      url: `api/maps/${id}`
     });
     console.log('Map data:', map);
 
@@ -97,7 +97,7 @@ async function fetchMapCoords() {
 async function initMap() {
   try {
     // Fetch map coordinates
-    const mapCoords = await fetchMapCoords();
+    const mapCoords = await fetchMapCoords(1);
 
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");
