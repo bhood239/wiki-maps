@@ -16,11 +16,11 @@ async function addPin(map, pin) {
   if (pin) {
     const infoWindow = new google.maps.InfoWindow({
       content: `
-      <div style='float:left;'><img style='width:150px; height:150px;' src='${pin.image}'></div>
-      <div style='float:right; padding: 10px;'>
+      <div style='text-align: center;'><img style='width:200px; height:200px;' src='${pin.image}'></div>
+      <div style='padding: 10px;'>
         <h1>${pin.title}</h1>
         <p>${pin.description}</p>
-        <div style='position: absolute; bottom: 0; right: 10px;'>
+        <div style='bottom: 0; right: 10px;'>
           <p>Added by: ${pin.username}</p>
         </div>
       </div>`
