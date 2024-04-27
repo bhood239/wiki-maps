@@ -12,17 +12,6 @@ router.post('/', (req, res) => {
   })
 })
 
-// //READ ALL - GET /
-// router.get('/', async (req, res) => {
-//   try {
-//     const maps = await mapsQueries.getMapById(1);
-//     res.json(maps);
-//   } catch (error) {
-//     console.error("Error fetching maps:", error);
-//     res.status(500).send(error.message);
-//   }
-// });
-
 //READ ALL - GET /
 router.get('/', async (req, res) => {
   try {
