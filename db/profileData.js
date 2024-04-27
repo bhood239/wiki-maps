@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+
 const { pool, query } = require("./index");
 
 
@@ -17,7 +17,6 @@ const getUserDataWithId = function(id) {
       GROUP BY users.id;
       `, [id])
     .then((res) => {
-      console.log(res);
       const user = res.rows[0];
       if (user) {
         return user;
