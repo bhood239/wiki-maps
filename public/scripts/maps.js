@@ -94,10 +94,10 @@ async function fetchMapCoords(id) {
 }
 
 // GENERATE MAP
-async function initMap() {
+async function initMap(id) {
   try {
     // Fetch map coordinates
-    const mapCoords = await fetchMapCoords(1);
+    const mapCoords = await fetchMapCoords(id);
 
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");
@@ -109,13 +109,25 @@ async function initMap() {
     });
 
     try {
-      const pins = await $.ajax({
+      const response = await $.ajax({
         method: 'GET',
-        url: '/api/pins'
-      }); // This awaits the fetched pins
-      console.log(pins);
-      for (const pin of pins) {
-        addPin(map, pin);
+        url: `/api/pins/${id}`
+      });
+
+      // Check if response contains the pin array
+      if (response && Array.isArray(response.pin)) {
+        const pins = response.pin;
+        console.log(pins);
+        for (const pin of pins) {
+          // Parse lat and lng strings into numbers
+          const latNum = parseFloat(pin.lat);
+          const lngNum = parseFloat(pin.lng);
+
+          // Assuming addPin expects an object with numeric lat and lng
+          addPin(map, { lat: latNum, lng: lngNum, content: pin.content });
+        }
+      } else {
+        console.error('Failed to load pins: Invalid response format');
       }
     } catch (error) {
       console.error('Failed to load pins:', error);
