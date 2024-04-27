@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const database = require("../db/profileData");
-console.log('profile');
+
 // Send profile data
 router.get('/', (req, res) => {
   let userId;
@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
       if (!user) {
         return res.send({ error: "no user with that id" });
       }
+      console.log('favmaps', user.favmaps);
       res.send({
         name: user.name,
         image: user.image,
