@@ -2,10 +2,14 @@
 
 
 $(() => {
+  // load maps into menu list
+  loadMaps();
+
   // If logged in, show options visible only to an authenticated user
   checkLoggedIn()
     .then((isLoggedIn) => {
       if (isLoggedIn) {
+        console.log('isLoggedIn');
         $('.heart').show();
         $('#map-options-toggle').show();
       }
@@ -21,6 +25,14 @@ $(() => {
   $('#user-toggle').on('click', loadLoginPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
+  $('#fav-maps').on('click', () => {
+    $('#contributed-maps').addClass('hide');
+    $('#favourite-maps').removeClass('hide');
+  });
+  $('#con-maps').on('click', () => {
+    $('#favourite-maps').addClass('hide');
+    $('#contributed-maps').removeClass('hide');
+  });
   $('#map-options-toggle').on('click', getMapOptions);
   $('.btn-login').click(() => {
     $('#register-form').addClass('hide');
@@ -79,25 +91,37 @@ function loadMaps() {
   // clear the element to avoid duplicate maps
   $('.menu-items').empty();
   // Make Ajax GET request
-  $.get('/map')
-    .then((map) => {
-      $map = createMap(map);
-      // takes return value and appends it to menu-options
-      $('.menu-options').prepend($map);
+  $.get('/api/maps')
+    .then((maps) => {
+      console.log('maps', maps);
+      renderMaps(maps);
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
+const renderMaps = (maps) => {
+  // loop through maps
+  for (const map of maps) {
+    console.log('eachmap', map);
+    const $map = createMap(map);
+    // takes return value and appends it to menu-options
+    $('.menu-items').prepend($map);
+  }
+};
+
 // Function to create map
 const createMap = (map) => {
+  console.log('createmap', map);
   // Using .text() method to avoid XSS
   const $map = $('<li>').addClass('map-name').text(map.name);
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
   // giving heart icon an 'id' to use to add/remove fav maps with that id
   const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
   $map.append($heart);
+
+  return $map;
 };
 
 const loadLoginPage = () => {
@@ -156,12 +180,12 @@ function loadProfile() {
       // prepend the number of contributed maps
       $('#contributed-maps-count').append('<p>' + res.conMapsCount + '</p>');
       // Loop through favourite maps and append to list
-      if(res.favMaps){
+      if (res.favMaps) {
         console.log(res.favMaps);
-      res.favMaps.forEach((map) => {
-        $('#favourite-maps').append('<li>' + map + '</li>');
-      });
-    }
+        res.favMaps.forEach((map) => {
+          $('#favourite-maps').append('<li>' + map + '</li>');
+        });
+      }
       // prepend the number of contributed maps
       // $('#contributed-maps').prepend(res.conMaps);
     })
