@@ -94,10 +94,10 @@ async function fetchMapCoords(id) {
 }
 
 // GENERATE MAP
-async function initMap() {
+async function initMap(id) {
   try {
     // Fetch map coordinates
-    const mapCoords = await fetchMapCoords();
+    const mapCoords = await fetchMapCoords(id);
 
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");

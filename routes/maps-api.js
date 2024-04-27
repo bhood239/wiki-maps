@@ -33,9 +33,9 @@ router.get('/', async (req, res) => {
 });
 
 //READ ONE - GET /:id
-router.get('/1', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const map = await mapsQueries.getMapById(1);
+    const map = await mapsQueries.getMapById(req.params.id);
     res.json(map);
   } catch (error) {
     console.error("Error fetching map:", error);
