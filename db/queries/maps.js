@@ -1,5 +1,14 @@
 const db = require('../connection');
 
+const createMap = (userId, name, description, lat, lng) => {
+  return db.query('INSERT INTO maps (creator_id, name, description, lat, lng) VALUES ($1, $2, $3, $4, $5) RETURNING *', [userId, name, description, lat, lng])
+  .then(data => {
+    console.log(data.rows[0]);
+    res.status(200).send('Success');
+    return;
+  });
+};
+
 const getMaps = () => {
   return db.query('SELECT lat, lng FROM maps WHERE maps.id = 1;'
     )
@@ -23,4 +32,4 @@ const getMapsList = () => {
     });
 };
 
-module.exports = { getMaps, getMapById, getMapsList };
+module.exports = { getMaps, getMapById, getMapsList, createMap };
