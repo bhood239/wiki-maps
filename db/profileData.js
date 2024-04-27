@@ -1,5 +1,5 @@
-
-const { pool, query } = require("./index");
+const { Pool } = require("pg");
+const { pool, query } = require("./connection");
 
 
 const getUserDataWithId = function(id) {

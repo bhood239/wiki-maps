@@ -73,7 +73,7 @@ async function fetchMapCoords() {
   try {
     const map = await $.ajax({
       method: 'GET',
-      url: 'api/maps'
+      url: 'api/maps/1'
     });
     console.log('Map data:', map);
 

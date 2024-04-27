@@ -3,11 +3,11 @@ const db = require('../connection');
 //CRUD for pins
 
 //CREATE
-const createPin = (pinInfo, map_id) => {
+const createPin = (pinInfo, map_id, content) => {
   return db
     .query(
-      'INSERT INTO pins (lat, lng, map_id) VALUES ($1, $2, $3) RETURNING *;',
-      [pinInfo.lat, pinInfo.lng, map_id]
+      'INSERT INTO pins (lat, lng, map_id, description) VALUES ($1, $2, $3, $4) RETURNING *;',
+      [pinInfo.lat, pinInfo.lng, map_id, content]
     )
     .then((data) => data.rows[0]);
 };

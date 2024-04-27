@@ -1,0 +1,20 @@
+<div>
+  <tbody>
+    <%  for(key in urls) { %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= urls[key].longURL %></td>
+        <td>
+          <form method="GET" action="urls/<%= key %>">
+            <button style="background-color: white; border-color: blue; color: blue;" type="submit" class="btn btn-primary">Edit</button>
+        </form>
+      </td>
+        <td>
+          <form method="POST" action="/urls/<%= key %>/delete">
+          <button style="background-color: white; border-color: red; color: red;" type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </td>
+      </tr>
+    <% } %>
+  </tbody>
+</div>
