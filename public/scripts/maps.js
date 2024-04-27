@@ -5,6 +5,7 @@ let map; // Define map in a scope accessible to the event listener
 //LOAD CURRENT PINS FROM DATABASE
 // Function to add a pin to the map
 async function addPin(map, pin) {
+  console.log(pin);
   const position = {
     lat: Number(pin.lat),
     lng: Number(pin.lng)
@@ -12,9 +13,17 @@ async function addPin(map, pin) {
   const marker = new google.maps.Marker({ position, map });
 
   // Check if content exists for InfoWindow
-  if (pin.content) {
+  if (pin) {
     const infoWindow = new google.maps.InfoWindow({
-      content: pin.content
+      content: `
+      <div style='text-align: center;'><img style='width:200px; height:200px;' src='${pin.image}'></div>
+      <div style='padding: 10px;'>
+        <h1>${pin.title}</h1>
+        <p>${pin.description}</p>
+        <div style='bottom: 0; right: 10px;'>
+          <p>Added by: ${pin.username}</p>
+        </div>
+      </div>`
     });
 
     // Open InfoWindow when marker is clicked
@@ -117,14 +126,13 @@ async function initMap(id) {
       // Check if response contains the pin array
       if (response && Array.isArray(response.pin)) {
         const pins = response.pin;
-        console.log(pins);
         for (const pin of pins) {
           // Parse lat and lng strings into numbers
           const latNum = parseFloat(pin.lat);
           const lngNum = parseFloat(pin.lng);
 
           // Assuming addPin expects an object with numeric lat and lng
-          addPin(map, { lat: latNum, lng: lngNum, content: pin.content });
+          addPin(map, { lat: latNum, lng: lngNum, title: pin.title, description: pin.description, image: pin.image, username: pin.username });
         }
       } else {
         console.error('Failed to load pins: Invalid response format');

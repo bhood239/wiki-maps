@@ -14,7 +14,7 @@ const createPin = (pinInfo, map_id, content) => {
 
 //READ ONE MAP'S PINS
 const getPinsByMapId = (mapId) => {
-  return db.query('SELECT pins.lat, pins.lng, pins.description AS content FROM pins JOIN maps ON map_id = maps.id WHERE map_id = $1;', [mapId]
+  return db.query('SELECT pins.lat, pins.lng, pins.title, pins.description, users.username, images.image_url AS image FROM pins JOIN maps ON map_id = maps.id JOIN images ON pin_id = pins.id JOIN users ON user_id = users.id WHERE map_id = $1;', [mapId]
     )
     .then(data => {
       return data.rows;
