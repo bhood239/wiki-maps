@@ -3,6 +3,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const db = require('../db/connection');
 const cookieSession = require('cookie-session');
+const validCookies = require('../db/validCookies');
 
 router.use(cookieSession({
   name: 'session',
@@ -24,9 +25,8 @@ router.post('/', (req, res) => {
   const { username, password } = req.body;
 
   // 1 Redirect to main page if signed in
-  if (req.session.user) {
-    console.log('Client has a cookie, redirectng to /login');
-    res.redirect('../login');
+  if (validCookies.includes(req.session.user)) {
+    res.status(401).send('Already logged in');
     return;
   }
 
@@ -46,6 +46,8 @@ router.post('/', (req, res) => {
       } else { // Username available
         const cookie = uuidv4();
         req.session.user = cookie;
+        validCookies.push(cookie);
+
         return db.query(
           `INSERT INTO users (username, password, cookie_id)
                 VALUES ($1, $2, $3)`, [username, password, cookie])
