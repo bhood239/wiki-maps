@@ -66,7 +66,7 @@ function changeIconColor() {
     // Check the id of the icon which is map id
     const mapId = $(this).attr('id');
     // send a POST request to '/favMaps' to remove the map_id from favourites table
-    $.post({ url: '/favMaps', data: mapId })
+    $.post( '/favMaps/delete', mapId )
       .then((res) => {
         console.log('Removed from favourites.');
       })
@@ -79,7 +79,7 @@ function changeIconColor() {
     // Check the id of the icon which is map id
     const mapId = $(this).attr('id');
     // send a POST request to '/favMaps' to add the map_id to favourites table
-    $.post({ url: '/favMaps', data: mapId })
+    $.post( '/favMaps', mapId )
       .then((res) => {
         console.log('Added to favourites.');
       })

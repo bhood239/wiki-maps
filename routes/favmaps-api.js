@@ -22,7 +22,7 @@ router.post('/:id/delete', (req, res) => {
   }
 
   const userId = req.session.userId;
-  const mapId = req.params.id;
+  const mapId = req.body.mapId;
 
   favoritesQueries.removeFavorite(userId, mapId);
 });
@@ -35,7 +35,7 @@ router.post('/:id', (req, res) => {
   }
 
   const userId = req.session.userId;
-  const mapId = req.params.id;
+  const mapId = req.body.mapId;
 
   favoritesQueries.createFavorite(userId, mapId);
 });
