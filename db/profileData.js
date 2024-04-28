@@ -1,9 +1,10 @@
-const { Pool } = require("pg");
-const { pool, query } = require("./connection");
+
+const db = require("./connection");
+
 
 
 const getUserDataWithId = function(id) {
-  return pool.query(`
+  return db.query(`
       SELECT users.username AS name,
       users.profile_photo AS image,
       COUNT(DISTINCT favorited_maps.map_id) AS favMapsCount,
@@ -17,6 +18,7 @@ const getUserDataWithId = function(id) {
       GROUP BY users.id;
       `, [id])
     .then((res) => {
+      console.log('profileData');
       const user = res.rows[0];
       if (user) {
         return user;
@@ -28,4 +30,4 @@ const getUserDataWithId = function(id) {
     });
 };
 
-module.exports = { pool, query, getUserDataWithId };
+module.exports = { getUserDataWithId };

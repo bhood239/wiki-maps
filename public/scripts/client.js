@@ -14,17 +14,20 @@ $(() => {
       }
     });
 
+    // Load index page when title is clicked
   $('.nav-title').on('click', () => {
     $('.login-container').addClass('hide');
     $('.profile-container').addClass('hide');
     $('.map-form-container').addClass('hide');
     $('.map-container').removeClass('hide');
   });
+
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
+
   $('#fav-maps').on('click', () => {
     $('#contributed-maps').addClass('hide');
     $('#favourite-maps').removeClass('hide');
@@ -34,6 +37,7 @@ $(() => {
     $('#contributed-maps').removeClass('hide');
   });
   $('#map-options-toggle').on('click', getMapOptions);
+  
   $('.btn-login').click(() => {
     $('#register-form').addClass('hide');
     $('#login-form').toggleClass('hide');
