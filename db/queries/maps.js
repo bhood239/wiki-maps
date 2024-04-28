@@ -5,9 +5,7 @@ const db = require('../connection');
 const createMap = (userId, name, description, lat, lng) => {
   return db.query('INSERT INTO maps (creator_id, name, description, lat, lng) VALUES ($1, $2, $3, $4, $5) RETURNING *;', [userId, name, description, lat, lng])
     .then(data => {
-      console.log(data.rows[0]);
-      res.status(200).send('Success');
-      return;
+      return data.rows;
     });
 };
 
