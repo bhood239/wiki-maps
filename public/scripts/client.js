@@ -17,7 +17,8 @@ $(() => {
   $('.nav-title').on('click', () => {
     $('.login-container').addClass('hide');
     $('.profile-container').addClass('hide');
-    $('.map-container').removeClass('hide')
+    $('.map-form-container').addClass('hide');
+    $('.map-container').removeClass('hide');
   });
   $('.menu').on('click', getMenuOptions);
   $('.heart').on('click', changeIconColor);
@@ -36,12 +37,15 @@ $(() => {
   $('.btn-login').click(() => {
     $('#register-form').addClass('hide');
     $('#login-form').toggleClass('hide');
+    $('.btn-log-reg-container').toggleClass('hide');
   })
   $('.btn-reg').click(() => {
     $('#login-form').addClass('hide');
     $('#register-form').toggleClass('hide');
+    $('.btn-log-reg-container').toggleClass('hide');
   })
 
+  $('#add-map').on('click', loadMapForm);
 
 });
 
@@ -143,8 +147,11 @@ const loadLoginPage = () => {
           $('.user-options').slideDown();
         }
       } else {
-        $('.login-container').toggleClass('hide');
-        $('.map-container').toggleClass('hide');
+        $('.login-container').removeClass('hide');
+        $('.map-container').addClass('hide');
+        $('.btn-log-reg-container').removeClass('hide');
+        $('#login-form').addClass('hide');
+        $('#register-form').addClass('hide');
       }
     });
 };
@@ -211,3 +218,15 @@ function getMapOptions() {
     $('.map-options').slideDown();
   }
 }
+
+const loadMapForm = () => {
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        $('.login-container').addClass('hide');
+        $('.profile-container').addClass('hide');
+        $('.map-container').addClass('hide');
+        $('.map-form-container').removeClass('hide');
+      }
+    });
+};
