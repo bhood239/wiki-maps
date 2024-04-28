@@ -2,6 +2,16 @@ const express = require('express');
 const router  = express.Router();
 const favoritesQueries = require('../db/queries/favorites');
 const validCookies = require('../db/validCookies');
+const cookieSession = require('cookie-session');
+
+router.use(cookieSession({
+  name: 'session',
+  keys: ['0'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
 // FAVMAPS CRUD REST API
 
 //DELETE - POST /:id/delete

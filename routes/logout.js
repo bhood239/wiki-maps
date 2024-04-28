@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
+
 router.use(cookieSession({
   name: 'session',
   keys: ['0'],
