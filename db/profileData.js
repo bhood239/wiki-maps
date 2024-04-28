@@ -45,11 +45,11 @@ const getUserDataWithId = async function(id) {
 
     console.log('favMapsPromise', favMaps.rows[0])
     const result = {
-      name: userInfo.rows[0]?.name,
-      favMapsCount: favMapsCount.rows[0]?.favmapscount,
-      conMapsCount: conMapsCount.rows[0]?.conmapscount,
-      favMaps: favMaps.rows[0]?.favmaps,
-      conMaps: conMaps.rows[0]?.conmaps
+      name: userInfo.rows[0].name,
+      favMapsCount: favMapsCount.rows[0].favmapscount,
+      conMapsCount: conMapsCount.rows[0].conmapscount,
+      favMaps: favMaps.rows[0].favmaps,
+      conMaps: conMaps.rows[0].conmaps
     }
 
     console.log('RESULTS --> ', result)
