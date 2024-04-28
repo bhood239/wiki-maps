@@ -21,7 +21,7 @@ const getMaps = () => {
 };
 //READ ONE
 const getMapById = (id) => {
-  return db.query('SELECT lat, lng FROM maps WHERE maps.id = $1', [id])
+  return db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = $1', [id])
   .then(data => {
     return data.rows;
   });
