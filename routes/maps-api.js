@@ -16,7 +16,6 @@ router.use(cookieSession({
 
 // CREATE - POST /
 router.post('/', (req, res) => {
-  console.log('reqsessionuser' + req.session.user);
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
