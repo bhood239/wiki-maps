@@ -108,14 +108,14 @@ const renderMaps = (maps) => {
   // loop through maps
   for (const map of maps) {
     console.log('eachmap', map);
-    const $map = createMap(map);
+    const $map = createMapList(map);
     // takes return value and appends it to menu-options
     $('.menu-items').prepend($map);
   }
 };
 
 // Function to create map
-const createMap = (map) => {
+const createMapList = (map) => {
   console.log('createmap', map);
 
   const $mapItem = $('<li>').addClass('map-name').text(map.name); // Create list item
@@ -230,3 +230,4 @@ const loadMapForm = () => {
       }
     });
 };
+

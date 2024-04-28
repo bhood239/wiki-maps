@@ -6,6 +6,7 @@ const createMap = (event) => {
   // Prevents default from submission
   event.preventDefault();
 
+  console.log('create map');
   // Take the form values
   const name = $('#name').val();
   const description = $('#description').val();
@@ -21,4 +22,4 @@ const createMap = (event) => {
     .catch((err) => {
       alert('An error occured. Please try again.');
     });
-}
+};
