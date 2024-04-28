@@ -1,7 +1,7 @@
 // See: https://sass-lang.com/
 
 .map-container {
-  z-index: 1000;
+  
 }
 
 #map {
@@ -69,11 +69,18 @@
 }
 
 .btn-log-reg-container {
-  display: flex;
-  justify-content: center;
   top: 100 px;
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .login-container {
+  padding: 60px;
+}
+
+.map-form-container {
   padding: 60px;
 }
