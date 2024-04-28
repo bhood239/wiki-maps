@@ -15,7 +15,7 @@ router.use(cookieSession({
 // FAVMAPS CRUD REST API
 
 //DELETE - POST /:id/delete
-router.post('/:id/delete', (req, res) => {
+router.post('/delete', (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
@@ -28,7 +28,7 @@ router.post('/:id/delete', (req, res) => {
 });
 
 // CREATE - POST /:id/
-router.post('/:id', (req, res) => {
+router.post('/', (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;

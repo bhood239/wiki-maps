@@ -23,7 +23,6 @@ $(() => {
   });
 
   $('.menu').on('click', getMenuOptions);
-  $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
@@ -62,17 +61,15 @@ const getMenuOptions = () => {
   }
 };
 
-function changeIconColor() {
+function changeIconColor(id) {
   // Check if the icon already has the 'clicked' class
-  console.log('before', this);
-  if ($(this).hasClass('clicked')) {
-    console.log(this);
+  if ($(`#${id}`).hasClass('clicked')) {
     // If it does, remove the 'clicked' class to revert to the previous color
-    $(this).removeClass('clicked');
+    $(`#${id}`).removeClass('clicked');
     // Check the id of the icon which is map id
-    const mapId = $(this).attr('id');
+    const mapId = id;
     // send a POST request to '/favMaps' to remove the map_id from favourites table
-    $.post( '/favMaps/delete', mapId )
+    $.post( '/api/favmaps/delete', mapId )
       .then((res) => {
         console.log('Removed from favourites.');
       })
@@ -81,11 +78,11 @@ function changeIconColor() {
       });
   } else {
     // If it doesn't, add the 'clicked' class to change the color to red
-    $(this).addClass('clicked');
+    $(`#${id}`).addClass('clicked');
     // Check the id of the icon which is map id
-    const mapId = $(this).attr('id');
+    const mapId = id;
     // send a POST request to '/favMaps' to add the map_id to favourites table
-    $.post( '/favMaps', mapId )
+    $.post( '/api/favmaps', mapId )
       .then((res) => {
         console.log('Added to favourites.');
       })
@@ -124,19 +121,26 @@ const renderMaps = (maps) => {
 const createMapList = (map) => {
   console.log('createmap', map);
 
-  const $mapItem = $('<li>').addClass('map-name').text(map.name); // Create list item
+  const $mapItem = $('<li>')
+  const $mapDiv = $('<div>').addClass('map-name').text(map.name); // Create list item
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
   // giving heart icon an 'id' to use to add/remove fav maps with that id
-  const $heart = $('<span>').addClass('heart clicked').attr('id', map.id).append($heartIcon);
+  const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
+  $mapItem.append($mapDiv);
   $mapItem.append($heart);
 
   // Attach click event to the map button to initialize the map
-  $mapItem.on('click', async function() {
+  $mapDiv.on('click', async function() {
     try {
       await initMap(map.id); // Initialize map with the clicked map ID
     } catch (error) {
       console.error('Error initializing map:', error);
     }
+  });
+
+  // Attach click event to the heart icon to add to fav
+  $heart.on('click', async function() {
+    changeIconColor(map.id);
   });
 
   return $mapItem;

@@ -43,6 +43,9 @@ nav {
     &:hover {
       background-color: slategrey;
     }
+    .map-name {
+      cursor: pointer;
+    }
     .heart {
       // display: none;
       cursor: pointer;
