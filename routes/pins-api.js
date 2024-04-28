@@ -2,6 +2,15 @@ const express = require('express');
 const router  = express.Router();
 const pinsQueries = require('../db/queries/pins');
 const validCookies = require('../db/validCookies');
+const cookieSession = require('cookie-session');
+
+router.use(cookieSession({
+  name: 'session',
+  keys: ['0'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
 // PINS CRUD REST API
 
@@ -64,7 +73,7 @@ router.post('/:id/delete', (req, res) => {
     res.status(405).send('Not authorized');
     return;
   }
-  
+
   res.json({
     message: 'pin deleted'
   })

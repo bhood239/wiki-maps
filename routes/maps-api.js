@@ -2,6 +2,16 @@ const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 const validCookies = require('../db/validCookies');
+const cookieSession = require('cookie-session');
+
+router.use(cookieSession({
+  name: 'session',
+  keys: ['0'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
 // PINS CRUD REST API
 
 // CREATE - POST /
@@ -10,6 +20,7 @@ router.post('/', (req, res) => {
     res.status(405).send('Not authorized');
     return;
   }
+
 
   const userId = req.session.userId;
   const name = req.body.name;
