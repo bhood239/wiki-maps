@@ -37,7 +37,7 @@ $(() => {
     $('#contributed-maps').removeClass('hide');
   });
   $('#map-options-toggle').on('click', getMapOptions);
-  
+
   $('.btn-login').click(() => {
     $('#register-form').addClass('hide');
     $('#login-form').toggleClass('hide');
@@ -64,7 +64,9 @@ const getMenuOptions = () => {
 
 function changeIconColor() {
   // Check if the icon already has the 'clicked' class
+  console.log('before', this);
   if ($(this).hasClass('clicked')) {
+    console.log(this);
     // If it does, remove the 'clicked' class to revert to the previous color
     $(this).removeClass('clicked');
     // Check the id of the icon which is map id
@@ -125,7 +127,7 @@ const createMapList = (map) => {
   const $mapItem = $('<li>').addClass('map-name').text(map.name); // Create list item
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
   // giving heart icon an 'id' to use to add/remove fav maps with that id
-  const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
+  const $heart = $('<span>').addClass('heart clicked').attr('id', map.id).append($heartIcon);
   $mapItem.append($heart);
 
   // Attach click event to the map button to initialize the map
@@ -186,6 +188,7 @@ function checkLoggedIn() {
 function loadProfile() {
   $('.profile-container').removeClass('hide');
   $('.map-container').toggleClass('hide');
+  $('#contributed-maps').addClass('hide');
 
   // const id = this.id;
   $.get('/profile')
@@ -205,8 +208,12 @@ function loadProfile() {
           $('#favourite-maps').append('<li>' + map + '</li>');
         });
       }
-      // prepend the number of contributed maps
-      // $('#contributed-maps').prepend(res.conMaps);
+      // Loop through contributed maps and append to list
+      if (res.conMaps) {
+        res.favMaps.forEach((map) => {
+          $('#contributed-maps').append('<li>' + map + '</li>');
+        });
+      }
     })
     .catch((error) => {
       console.error("Error loading profile:", error);
