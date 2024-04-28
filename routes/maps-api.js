@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
 
   const userId = req.session.userId;
   const name = req.body.name;
+  console.log('name', name);
   const description = req.body.description;
   const lat = req.body.lat;
   const lng = req.body.lng;
