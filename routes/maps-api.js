@@ -1,7 +1,6 @@
 const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
-const db = require('../db/connection');
 const validCookies = require('../db/validCookies');
 // PINS CRUD REST API
 
@@ -18,7 +17,7 @@ router.post('/', (req, res) => {
   const lat = req.body.lat;
   const lng = req.body.lng;
 
-  createMap(userId, name, description, lat, lng);
+  mapsQueries.createMap(userId, name, description, lat, lng);
 });
 
 //READ ALL - GET /
@@ -51,7 +50,7 @@ router.post('/maps/:id', (req, res) => {
   }
   console.log(req.body);
   res.json({
-    message: 'pin updated'
+    message: 'map updated'
   })
 })
 
@@ -62,7 +61,7 @@ router.post('/maps/:id/delete', (req, res) => {
     return;
   }
   res.json({
-    message: 'pin deleted'
+    message: 'map deleted'
   })
 })
 
