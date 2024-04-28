@@ -24,10 +24,10 @@ router.get('/', (req, res) => {
       res.send({
         name: user.name,
         image: user.image,
-        favMapsCount: user.favmapscount,
-        conMapsCount: user.conmapscount,
-        favMaps: user.favmaps,
-        // conMaps: user.conMaps
+        favMapsCount: user.favMapsCount,
+        conMapsCount: user.conMapsCount,
+        favMaps: user.favMaps,
+        conMaps: user.conMaps
       });
     })
     .catch((err) => {
