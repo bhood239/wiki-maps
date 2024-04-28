@@ -214,7 +214,7 @@ function loadProfile() {
       }
       // Loop through contributed maps and append to list
       if (res.conMaps) {
-        res.favMaps.forEach((map) => {
+        res.conMaps.forEach((map) => {
           $('#contributed-maps').append('<li>' + map + '</li>');
         });
       }
