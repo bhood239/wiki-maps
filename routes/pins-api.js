@@ -6,16 +6,19 @@ const validCookies = require('../db/validCookies');
 // PINS CRUD REST API
 
 // CREATE - POST /
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
   }
 
-  const { lat, lng } = req.body; // Extract lat and lng from request body
+  console.log("Received body:", req.body);
+  const { lat, lng, map_id, title, description, image } = req.body;
+  if (lat == null || lng == null) { // Checking for null or undefined
+    return res.status(400).json({ error: 'Latitude and longitude are required.' });
+  }
   try {
-    // Use createPin function to insert pin into the database
-    const newPin = pinsQueries.createPin({ lat, lng }, 1);
+    const newPin = await pinsQueries.createPin({ lat, lng, map_id, title, description, image });
     res.status(201).json(newPin); // Send back the created pin as JSON response
   } catch (error) {
     console.error('Error creating pin:', error);
@@ -26,7 +29,7 @@ router.post('/', (req, res) => {
 //READ ALL - GET /
 router.get('/', async (req, res) => {
   try {
-    const pins = await pinsQueries.getPinsByMapId(1);
+    const pins = await pinsQueries.getPins();
     res.json(pins);
   } catch (error) {
     console.error("Error fetching pins:", error);
@@ -64,7 +67,7 @@ router.post('/:id/delete', (req, res) => {
     res.status(405).send('Not authorized');
     return;
   }
-  
+
   res.json({
     message: 'pin deleted'
   })
