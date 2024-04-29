@@ -69,12 +69,12 @@ function changeIconColor(id) {
     // Check the id of the icon which is map id
     const mapId = id;
     // send a POST request to '/favMaps' to remove the map_id from favourites table
-    $.post( '/api/favmaps/delete', mapId )
+    $.post( '/api/favmaps/delete', { mapId })
       .then((res) => {
-        console.log('Removed from favourites.');
+        console.log(res);
       })
       .catch((err) => {
-        console.log('An error occured. Try again later.');
+        console.log(err.responseText);
       });
   } else {
     // If it doesn't, add the 'clicked' class to change the color to red
@@ -82,12 +82,12 @@ function changeIconColor(id) {
     // Check the id of the icon which is map id
     const mapId = id;
     // send a POST request to '/favMaps' to add the map_id to favourites table
-    $.post( '/api/favmaps', mapId )
+    $.post( '/api/favmaps', { mapId })
       .then((res) => {
-        console.log('Added to favourites.');
+        console.log(res);
       })
       .catch((err) => {
-        console.log('An error occured. Try again later.');
+        console.log(err.responseText);
       });
   }
 }
