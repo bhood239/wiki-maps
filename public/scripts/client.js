@@ -14,16 +14,19 @@ $(() => {
       }
     });
 
+    // Load index page when title is clicked
   $('.nav-title').on('click', () => {
     $('.login-container').addClass('hide');
     $('.profile-container').addClass('hide');
-    $('.map-container').removeClass('hide')
+    $('.map-form-container').addClass('hide');
+    $('.map-container').removeClass('hide');
   });
+
   $('.menu').on('click', getMenuOptions);
-  $('.heart').on('click', changeIconColor);
   $('#user-toggle').on('click', loadLoginPage);
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
+
   $('#fav-maps').on('click', () => {
     $('#contributed-maps').addClass('hide');
     $('#favourite-maps').removeClass('hide');
@@ -33,15 +36,19 @@ $(() => {
     $('#contributed-maps').removeClass('hide');
   });
   $('#map-options-toggle').on('click', getMapOptions);
+
   $('.btn-login').click(() => {
     $('#register-form').addClass('hide');
     $('#login-form').toggleClass('hide');
+    $('.btn-log-reg-container').toggleClass('hide');
   })
   $('.btn-reg').click(() => {
     $('#login-form').addClass('hide');
     $('#register-form').toggleClass('hide');
+    $('.btn-log-reg-container').toggleClass('hide');
   })
 
+  $('#add-map').on('click', loadMapForm);
 
 });
 
@@ -54,15 +61,15 @@ const getMenuOptions = () => {
   }
 };
 
-function changeIconColor() {
+function changeIconColor(id) {
   // Check if the icon already has the 'clicked' class
-  if ($(this).hasClass('clicked')) {
+  if ($(`#${id}`).hasClass('clicked')) {
     // If it does, remove the 'clicked' class to revert to the previous color
-    $(this).removeClass('clicked');
+    $(`#${id}`).removeClass('clicked');
     // Check the id of the icon which is map id
-    const mapId = $(this).attr('id');
+    const mapId = id;
     // send a POST request to '/favMaps' to remove the map_id from favourites table
-    $.post({ url: '/favMaps', data: mapId })
+    $.post( '/api/favmaps/delete', mapId )
       .then((res) => {
         console.log('Removed from favourites.');
       })
@@ -71,11 +78,11 @@ function changeIconColor() {
       });
   } else {
     // If it doesn't, add the 'clicked' class to change the color to red
-    $(this).addClass('clicked');
+    $(`#${id}`).addClass('clicked');
     // Check the id of the icon which is map id
-    const mapId = $(this).attr('id');
+    const mapId = id;
     // send a POST request to '/favMaps' to add the map_id to favourites table
-    $.post({ url: '/favMaps', data: mapId })
+    $.post( '/api/favmaps', mapId )
       .then((res) => {
         console.log('Added to favourites.');
       })
@@ -104,29 +111,36 @@ const renderMaps = (maps) => {
   // loop through maps
   for (const map of maps) {
     console.log('eachmap', map);
-    const $map = createMap(map);
+    const $map = createMapList(map);
     // takes return value and appends it to menu-options
     $('.menu-items').prepend($map);
   }
 };
 
 // Function to create map
-const createMap = (map) => {
+const createMapList = (map) => {
   console.log('createmap', map);
 
-  const $mapItem = $('<li>').addClass('map-name').text(map.name); // Create list item
+  const $mapItem = $('<li>')
+  const $mapDiv = $('<div>').addClass('map-name').text(map.name); // Create list item
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
   // giving heart icon an 'id' to use to add/remove fav maps with that id
   const $heart = $('<span>').addClass('heart').attr('id', map.id).append($heartIcon);
+  $mapItem.append($mapDiv);
   $mapItem.append($heart);
 
   // Attach click event to the map button to initialize the map
-  $mapItem.on('click', async function() {
+  $mapDiv.on('click', async function() {
     try {
       await initMap(map.id); // Initialize map with the clicked map ID
     } catch (error) {
       console.error('Error initializing map:', error);
     }
+  });
+
+  // Attach click event to the heart icon to add to fav
+  $heart.on('click', async function() {
+    changeIconColor(map.id);
   });
 
   return $mapItem;
@@ -143,8 +157,11 @@ const loadLoginPage = () => {
           $('.user-options').slideDown();
         }
       } else {
-        $('.login-container').toggleClass('hide');
-        $('.map-container').toggleClass('hide');
+        $('.login-container').removeClass('hide');
+        $('.map-container').addClass('hide');
+        $('.btn-log-reg-container').removeClass('hide');
+        $('#login-form').addClass('hide');
+        $('#register-form').addClass('hide');
       }
     });
 };
@@ -175,6 +192,7 @@ function checkLoggedIn() {
 function loadProfile() {
   $('.profile-container').removeClass('hide');
   $('.map-container').toggleClass('hide');
+  $('#contributed-maps').addClass('hide');
 
   // const id = this.id;
   $.get('/profile')
@@ -194,8 +212,12 @@ function loadProfile() {
           $('#favourite-maps').append('<li>' + map + '</li>');
         });
       }
-      // prepend the number of contributed maps
-      // $('#contributed-maps').prepend(res.conMaps);
+      // Loop through contributed maps and append to list
+      if (res.conMaps) {
+        res.conMaps.forEach((map) => {
+          $('#contributed-maps').append('<li>' + map + '</li>');
+        });
+      }
     })
     .catch((error) => {
       console.error("Error loading profile:", error);
@@ -211,3 +233,16 @@ function getMapOptions() {
     $('.map-options').slideDown();
   }
 }
+
+const loadMapForm = () => {
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        $('.login-container').addClass('hide');
+        $('.profile-container').addClass('hide');
+        $('.map-container').addClass('hide');
+        $('.map-form-container').removeClass('hide');
+      }
+    });
+};
+

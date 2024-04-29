@@ -52,6 +52,7 @@ const logoutRoutes = require('./routes/logout');
 const registerRoutes = require('./routes/register');
 const pinsApiRoutes = require('./routes/pins-api');
 const mapsApiRoutes = require('./routes/maps-api');
+const favmapsApiRoutes = require('./routes/favmaps-api');
 
 const profileRoutes = require('./routes/profile');
 
@@ -61,6 +62,7 @@ const profileRoutes = require('./routes/profile');
 app.use('/api/users', userApiRoutes);
 app.use('/api/pins', pinsApiRoutes);
 app.use('/api/maps', mapsApiRoutes);
+app.use('/api/favmaps', favmapsApiRoutes);
 app.use('/users', usersRoutes);
 
 app.use('/login', loginRoutes);
