@@ -1,11 +1,11 @@
 // map and pin generation functions
 
 let map; // Define map in a scope accessible to the event listener
+let mapId;
 
 //LOAD CURRENT PINS FROM DATABASE
 // Function to add a pin to the map
 async function addPin(map, pin) {
-  console.log(pin);
   const position = {
     lat: Number(pin.lat),
     lng: Number(pin.lng)
@@ -34,19 +34,52 @@ async function addPin(map, pin) {
 };
 
 // SCRIPT FOR USERS TO ADD PINS
-// Function to handle map click event
+// Function to handle map click
 function handleMapClick(event) {
   try {
-    const latLng = {
-      lat: event.latLng.lat(), // Get latitude from click
-      lng: event.latLng.lng() // Get longitude from click
+    // Create an info window with input fields for image URL, title, and description
+    const infoWindowContent = `
+      <div>
+        <label for="imageUrl">Image URL:</label><br>
+        <input type="text" id="imageUrl" name="imageUrl"><br>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br><br>
+        <button onclick="addPinFromInfoWindow()">Add Pin</button>
+      </div>
+    `;
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: infoWindowContent,
+      position: event.latLng,
+    });
+
+    infoWindow.open(map);
+
+    // Function to add pin using data from the info window
+    window.addPinFromInfoWindow = function() {
+      const imageUrl = document.getElementById('imageUrl').value;
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+
+      const pinData = {
+        lat: Number(event.latLng.lat()),
+        lng: Number(event.latLng.lng()),
+        map_id: mapId,
+        title: title || "Default Title",
+        description: description || "Default Description",
+        image: imageUrl || "https://http.cat/images/100.jpg"
+      };
+
+      if (map) {
+        placeMarker(pinData, map);
+        createPinOnServer(map, pinData); // Ensure pinData structure matches server expectation
+        infoWindow.close(); // Close the info window after adding the pin
+      } else {
+        console.error('Map object is undefined.');
+      }
     };
-    if (map) {
-      placeMarker(latLng, map); // Place marker on the map
-      createPinOnServer(latLng); // Send AJAX request to create pin in the database
-    } else {
-      console.error('Map object is undefined.');
-    }
   } catch (error) {
     console.error('Error handling map click:', error);
   }
@@ -61,18 +94,25 @@ function placeMarker(latLng, map) {
 }
 
 // Function to send AJAX request to create pin on the server
-function createPinOnServer(latLng) {
+function createPinOnServer(map, pinData) {
+  console.log("Sending pin data to server:", pinData);
   $.ajax({
     method: 'POST',
     url: '/api/pins',
-    data: latLng, // Send the latLng data to the server
+    contentType: 'application/json', // This tells the server to expect JSON data
+    data: JSON.stringify(pinData), // Ensure data is properly stringified
     success: function(response) {
       console.log('Pin created on the server:', response);
-      addPin(map, latLng);
-      // You can update the map or perform other actions based on the response
+      addPin(map, pinData);
     },
     error: function(error) {
       console.error('Error creating pin on server:', error);
+      if (error.responseText) {
+        console.log('Response Text:', error.responseText);
+      }
+      if (error.responseJSON) {
+        console.log('Response JSON:', error.responseJSON);
+      }
     }
   });
 }
@@ -84,7 +124,6 @@ async function fetchMapCoords(id) {
       method: 'GET',
       url: `api/maps/${id}`
     });
-    console.log('Map data:', map);
 
     // Check if map data is valid
     if (map && map.length > 0 && map[0].lat && map[0].lng) {
@@ -104,6 +143,7 @@ async function fetchMapCoords(id) {
 
 // GENERATE MAP
 async function initMap(id) {
+  mapId = id;
   try {
     // Fetch map coordinates
     const mapCoords = await fetchMapCoords(id);
@@ -131,7 +171,6 @@ async function initMap(id) {
           const latNum = parseFloat(pin.lat);
           const lngNum = parseFloat(pin.lng);
 
-          // Assuming addPin expects an object with numeric lat and lng
           addPin(map, { lat: latNum, lng: lngNum, title: pin.title, description: pin.description, image: pin.image, username: pin.username });
         }
       } else {

@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //UPDATE - POST /:id
-router.post('/maps/:id', (req, res) => {
+router.post('/:id', (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
@@ -67,7 +67,7 @@ router.post('/maps/:id', (req, res) => {
 })
 
 //DELETE - POST /:id/delete
-router.post('/maps/:id/delete', (req, res) => {
+router.post('/:id/delete', (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
