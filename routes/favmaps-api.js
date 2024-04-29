@@ -24,7 +24,10 @@ router.post('/delete', (req, res) => {
   const userId = req.session.userId;
   const mapId = req.body.mapId;
 
-  favoritesQueries.removeFavorite(userId, mapId);
+  favoritesQueries.removeFavorite(userId, mapId)
+  .then(() => {
+    res.status(200).send('Removed Favorite');
+  });
 });
 
 // CREATE - POST /:id/
