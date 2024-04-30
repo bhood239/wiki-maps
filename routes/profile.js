@@ -45,4 +45,19 @@ router.get('/', (req, res) => {
     });
 });
 
+// Edit profile data
+router.post('/', async (req, res) => {
+  const userId = req.session.userId;
+  const { profile_photo, username, password } = req.body;
+
+  try {
+    const result = await database.editProfileOfId(userId, profile_photo, username, password);
+    res.send(result);
+  } catch (err) {
+    console.error('Error editing profile:', err);
+    res.status(500).send('Failed to edit profile');
+  }
+});
+
+
 module.exports = router;
