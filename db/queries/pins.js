@@ -27,7 +27,7 @@ const createPin = (pinData) => {
 
 //READ ONE MAP'S PINS
 const getPinsByMapId = (mapId) => {
-  return db.query('SELECT pins.id, pins.lat, pins.lng, pins.title, pins.description, pins.map_id, users.username, images.image_url AS image FROM pins JOIN maps ON map_id = maps.id JOIN images ON pin_id = pins.id JOIN users ON user_id = users.id WHERE map_id = $1;', [mapId]
+  return db.query('SELECT pins.id, pins.lat, pins.lng, pins.title, pins.description, pins.map_id, users.username, images.image_url AS image FROM pins JOIN maps ON map_id = maps.id JOIN images ON pin_id = pins.id LEFT JOIN users ON user_id = users.id WHERE map_id = $1;', [mapId]
     )
     .then(data => {
       return data.rows;
@@ -36,7 +36,7 @@ const getPinsByMapId = (mapId) => {
 
 //READ ALL
 const getPins = () => {
-  return db.query('SELECT pins.id, pins.lat, pins.lng, pins.title, pins.description, pins.map_id, users.username, images.image_url AS image FROM pins JOIN maps ON map_id = maps.id JOIN images ON pin_id = pins.id JOIN users ON user_id = users.id'
+  return db.query('SELECT pins.id, pins.lat, pins.lng, pins.title, pins.description, pins.map_id, users.username, images.image_url AS image FROM pins JOIN maps ON map_id = maps.id JOIN images ON pin_id = pins.id LEFT JOIN users ON user_id = users.id'
     )
     .then(data => {
       return data.rows;

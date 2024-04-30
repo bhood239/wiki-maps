@@ -50,9 +50,9 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const pin = await pinsQueries.getPinsByMapId(req.params.id);
-    res.json({message: 'pin found', pin});
+    res.json({message: 'pins found', pin});
   } catch (error) {
-    console.error("Error fetching pin:", error);
+    console.error("Error fetching pins:", error);
     res.status(500).send(error.message);
   }
 });
