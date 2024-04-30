@@ -16,8 +16,10 @@
 }
 
 #profile-picture {
-  height: 80px;
-  padding: 5px;
+  img {
+    height: 100px;
+    border: wheat 5px solid;
+  }
 }
 
 #profile-name {

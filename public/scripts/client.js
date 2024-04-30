@@ -225,24 +225,24 @@ function loadProfile() {
   $.get('/profile')
     .then((res) => {
       // prepend image url to profile picture
-      $('#profile-picture').prepend('<img src="' + res.image + '" alt="Profile Picture">');
+      $('#profile-picture').prepend(`<img src="${res.image}" alt="Profile Picture">`);
       // prepend user name to profile name
-      $('#profile-name').prepend('<h1>' + res.name + '</h1>');
+      $('#profile-name').prepend(`<h1>${res.name}</h1>`);
       // prepend the number of favourite maps
-      $('#favourite-maps-count').append('<p>' + res.favMapsCount + '</p>');
+      $('#favourite-maps-count').append(`<p>${res.favMapsCount}</p>`);
       // prepend the number of contributed maps
-      $('#contributed-maps-count').append('<p>' + res.conMapsCount + '</p>');
+      $('#contributed-maps-count').append(`<p>${res.conMapsCount}</p>`);
       // Loop through favourite maps and append to list
       if (res.favMaps) {
         console.log(res.favMaps);
         res.favMaps.forEach((map) => {
-          $('#favourite-maps').append('<li>' + map + '</li>');
+          $('#favourite-maps').append(`<li>${map}</li>`);
         });
       }
       // Loop through contributed maps and append to list
       if (res.conMaps) {
         res.conMaps.forEach((map) => {
-          $('#contributed-maps').append('<li>' + map + '</li>');
+          $('#contributed-maps').append(`<li>${map}</li>`);
         });
       }
       profileLoaded = true;
