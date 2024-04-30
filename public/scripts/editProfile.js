@@ -3,7 +3,6 @@ $(() => {
 });
 
 function editProfile(event) {
-  console.log('editProfile');
   // Prevents default from submission
   event.preventDefault();
 
@@ -21,6 +20,6 @@ function editProfile(event) {
       window.location.href = '/';
     })
     .catch((err) => {
-      alert('An error occured. Please try again.');
+      alert(err.responseText);
     });
 }
