@@ -26,7 +26,7 @@ const getMapById = (id) => {
 };
 //READ ALL
 const getMapsList = () => {
-  return db.query('SELECT id, lat, lng, name, description FROM maps;'
+  return db.query('SELECT id, lat, lng, name, description, creator_id FROM maps;'
   )
     .then(data => {
       return data.rows;
