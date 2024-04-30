@@ -9,10 +9,10 @@ const createFavorite = (userId, mapId) => {
 };
 
 const readFavorites = (userId) => {
-  return db.query('SELECT * FROM favorited_maps WHERE user_id = $1;', [userId])
+  return db.query('SELECT ARRAY_AGG(map_id) AS maps FROM favorited_maps WHERE user_id = $1;', [userId])
     .then(data => {
-      console.log('READ: ' + data.rows);
-      return;
+      console.log('READ: ' + JSON.stringify(data.rows[0].maps));
+      return JSON.stringify(data.rows[0].maps);
     });
 };
 

@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 
   try {
     const favList = await favoritesQueries.readFavorites(req.session.userId);
-    res.json(favList);
+    res.send(favList);
   } catch (error) {
     console.error("Error fetching list of maps:", error);
     res.status(500).send(error.message);

@@ -11,6 +11,7 @@ $(() => {
         console.log('isLoggedIn');
         $('.heart').show();
         $('#map-options-toggle').show();
+        heartIcon();
       }
     });
 
@@ -100,6 +101,19 @@ function changeIconColor(id) {
   }
 }
 
+const heartIcon = () => {
+  $.get('/api/favmaps')
+  .then((maps) => {
+    const mapIds = JSON.parse(maps);
+    mapIds.forEach((mapId) => {
+      $(`#${mapId}`).addClass('clicked');
+    });
+  })
+  .catch((error) => {
+    console.error('Error fetching favorite maps:', error);
+  });
+};
+
 // Function to load maps in the menu options
 function loadMaps() {
   // clear the element to avoid duplicate maps
@@ -107,7 +121,7 @@ function loadMaps() {
   // Make Ajax GET request
   $.get('/api/maps')
     .then((maps) => {
-      console.log('maps', maps);
+      console.log('loadmaps', maps);
       renderMaps(maps);
     })
     .catch((err) => {
@@ -118,7 +132,6 @@ function loadMaps() {
 const renderMaps = (maps) => {
   // loop through maps
   for (const map of maps) {
-    console.log('eachmap', map);
     const $map = createMapList(map);
     // takes return value and appends it to menu-options
     $('.menu-items').prepend($map);
@@ -127,8 +140,6 @@ const renderMaps = (maps) => {
 
 // Function to create map
 const createMapList = (map) => {
-  console.log('createmap', map);
-
   const $mapItem = $('<li>')
   const $mapDiv = $('<div>').addClass('map-name').text(map.name); // Create list item
   const $heartIcon = $('<i>').addClass('fa-solid fa-heart');
