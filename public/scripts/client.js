@@ -27,6 +27,14 @@ $(() => {
   $('#logout').on('click', logout);
   $('#profile').on('click', loadProfile);
 
+  $('.edit-logo').on('click', () => {
+    $('.login-container').addClass('hide');
+    $('.profile-container').addClass('hide');
+    $('.map-form-container').addClass('hide');
+    $('.map-container').addClass('hide');
+    $('.edit-profile-container').removeClass('hide');
+  });
+
   $('#fav-maps').on('click', () => {
     $('#contributed-maps').addClass('hide');
     $('#favourite-maps').removeClass('hide');
@@ -189,10 +197,18 @@ function checkLoggedIn() {
     });
 }
 
+let profileLoaded = false;
+
 function loadProfile() {
   $('.profile-container').removeClass('hide');
   $('.map-container').toggleClass('hide');
   $('#contributed-maps').addClass('hide');
+
+  // to avoid duplicate load
+  if (profileLoaded) {
+    // Profile data is already loaded, do not load again
+    return;
+  }
 
   // const id = this.id;
   $.get('/profile')
@@ -218,6 +234,7 @@ function loadProfile() {
           $('#contributed-maps').append('<li>' + map + '</li>');
         });
       }
+      profileLoaded = true;
     })
     .catch((error) => {
       console.error("Error loading profile:", error);

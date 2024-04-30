@@ -46,17 +46,33 @@ const getUserDataWithId = async function(id) {
     console.log('favMapsPromise', favMaps.rows[0])
     const result = {
       name: userInfo.rows[0].name,
+      image: userInfo.rows[0].image,
       favMapsCount: favMapsCount.rows[0].favmapscount,
       conMapsCount: conMapsCount.rows[0].conmapscount,
       favMaps: favMaps.rows[0].favmaps,
       conMaps: conMaps.rows[0].conmaps
     }
 
-    console.log('RESULTS --> ', result)
     return result
   } catch (err) {
     console.log(err.message);
   }
 };
 
-module.exports = { getUserDataWithId };
+const editProfileOfId = async (id, profile_photo, username, password) => {
+  try {
+    await db.query(
+      `UPDATE users
+      SET profile_photo = $1, username = $2, password = $3
+      WHERE id = $4`, [profile_photo, username, password, id]
+    );
+    console.log("Profile Edited:", profile_photo);
+    return 'Profile Edited';
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+};
+
+
+module.exports = { getUserDataWithId, editProfileOfId };

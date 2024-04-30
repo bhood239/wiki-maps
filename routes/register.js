@@ -22,7 +22,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { username, password } = req.body;
+  const { profile_photo, username, password } = req.body;
+  console.log('photo', profile_photo);
 
   // 1 Redirect to main page if signed in
   if (validCookies.includes(req.session.user)) {
@@ -49,8 +50,8 @@ router.post('/', (req, res) => {
         validCookies.push(cookie);
 
         return db.query(
-          `INSERT INTO users (username, password, cookie_id)
-                VALUES ($1, $2, $3)`, [username, password, cookie])
+          `INSERT INTO users (profile_photo, username, password, cookie_id)
+                VALUES ($1, $2, $3, $4)`, [profile_photo, username, password, cookie])
           .then(() => {
             res.status(200).send('Success');
           });

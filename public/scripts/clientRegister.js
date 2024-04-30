@@ -9,10 +9,11 @@ function register(event) {
   // Take the username and password values
   const username = $('#register-form').find('input[name="username"]').val();
   const password = $('#register-form').find('input[name="password"]').val();
+  const profile_photo = $('#register-form').find('input[name="profile_photo"]').val();
 
 
   //Make AJAX POST request
-  $.post( '/register', { username, password } )
+  $.post( '/register', { profile_photo, username, password } )
     .then((res) => {
       // Redirect to home page
       window.location.href = '/';
