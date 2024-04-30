@@ -9,14 +9,6 @@ const createMap = (userId, name, description, lat, lng) => {
     });
 };
 
-//READ
-const getMaps = () => {
-  return db.query('SELECT lat, lng FROM maps WHERE maps.id = 1;'
-  )
-    .then(data => {
-      return data.rows;
-    });
-};
 //READ ONE
 const getMapById = (id) => {
   return db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = $1', [id])
@@ -33,4 +25,4 @@ const getMapsList = () => {
     });
 };
 
-module.exports = { getMaps, getMapById, getMapsList, createMap };
+module.exports = { getMapById, getMapsList, createMap };

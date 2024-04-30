@@ -43,11 +43,43 @@ const getPins = () => {
     });
 };
 
-//UPDATE
+// UPDATE - Update an existing pin
+const updatePin = (pinData, pinId) => {
+  // Destructure pinData object
+  const { lat, lng, map_id, title, description, image } = pinData;
 
+  // Update the pin information in the pins table
+  return db
+    .query(
+      'UPDATE pins SET lat = $1, lng = $2, map_id = $3, title = $4, description = $5 WHERE id = $6 RETURNING *;',
+      [lat, lng, map_id, title, description, pinId]
+    )
+    .then(async (data) => {
+      const updatedPin = data.rows[0]; // Get the updated pin information
+
+      // Check if there is an image URL to update
+      if (image) {
+        try {
+          // Update or insert the image information into the images table
+          await db.query(
+            'INSERT INTO images (pin_id, image_url) VALUES ($1, $2) ON CONFLICT (pin_id) DO UPDATE SET image_url = $2;',
+            [pinId, image]
+          );
+        } catch (error) {
+          console.error('Error updating image:', error);
+        }
+      }
+
+      return updatedPin; // Return the updated pin information
+    })
+    .catch((error) => {
+      console.error('Error updating pin:', error);
+      throw error; // Propagate the error for handling in the caller function
+    });
+};
 //DELETE
 
 
 
 
-module.exports = { getPins, getPinsByMapId, createPin };
+module.exports = { getPins, getPinsByMapId, createPin, updatePin };
