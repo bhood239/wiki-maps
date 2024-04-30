@@ -3,6 +3,7 @@ $(() => {
 });
 
 function editProfile(event) {
+  console.log('editProfile');
   // Prevents default from submission
   event.preventDefault();
 
