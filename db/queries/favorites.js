@@ -16,6 +16,18 @@ const readFavorites = (userId) => {
     });
 };
 
+const checkExistingFavorite = (userId, mapId) => {
+  return db.query('SELECT * FROM favorited_maps WHERE user_id = $1 AND map_id = $2;', [userId, mapId])
+    .then(data => {
+      if (data.rows.length !== 0) {
+        console.log('SEARCH: ' + data.rows);
+        return true;
+      } else {
+        return false;
+      }
+    });
+};
+
 const removeFavorite = (userId, mapId) => {
   return db.query('DELETE FROM favorited_maps WHERE user_id = $1 and map_id = $2 RETURNING *;', [userId, mapId])
     .then(data => {
@@ -24,4 +36,4 @@ const removeFavorite = (userId, mapId) => {
     });
 };
 
-module.exports = { createFavorite, readFavorites, removeFavorite };
+module.exports = { createFavorite, readFavorites, checkExistingFavorite, removeFavorite };

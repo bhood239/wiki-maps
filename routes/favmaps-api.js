@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const favoritesQueries = require('../db/queries/favorites');
 const validCookies = require('../db/validCookies');
 const cookieSession = require('cookie-session');
@@ -24,7 +24,10 @@ router.post('/delete', (req, res) => {
   const userId = req.session.userId;
   const mapId = req.body.mapId;
 
-  favoritesQueries.removeFavorite(userId, mapId);
+  favoritesQueries.removeFavorite(userId, mapId)
+  .then(() => {
+    res.status(200).send('Removed Favorite');
+  });
 });
 
 // CREATE - POST /:id/
@@ -37,7 +40,26 @@ router.post('/', (req, res) => {
   const userId = req.session.userId;
   const mapId = req.body.mapId;
 
-  favoritesQueries.createFavorite(userId, mapId);
+  // Check if the combination already exists
+  favoritesQueries.checkExistingFavorite(userId, mapId)
+    .then((existingFavorite) => {
+      if (existingFavorite) {
+        res.status(409).send('Favorite already exists');
+      } else {
+        favoritesQueries.createFavorite(userId, mapId)
+          .then(() => {
+            res.status(200).send('Favorite created');
+          })
+          .catch((error) => {
+            console.error('Error creating favorite:', error);
+            res.status(500).send('Internal server error');
+          });
+      }
+    })
+    .catch((error) => {
+      console.error('Error checking existing favorite:', error);
+      res.status(500).send('Internal server error');
+    });
 });
 
 //READ ALL - GET /
