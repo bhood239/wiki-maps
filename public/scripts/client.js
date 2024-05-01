@@ -11,6 +11,7 @@ $(() => {
         console.log('isLoggedIn');
         $('.heart').show();
         $('#map-options-toggle').show();
+        $('.edit-logo').show();
         heartIcon();
       }
     });
