@@ -10,7 +10,6 @@ $(() => {
       if (isLoggedIn) {
         console.log('isLoggedIn');
         $('.heart').show();
-        $('#map-options-toggle').show();
         $('.edit-logo').show();
         heartIcon();
       }
@@ -182,6 +181,7 @@ const loadLoginPage = () => {
         $('.btn-log-reg-container').removeClass('hide');
         $('#login-form').addClass('hide');
         $('#register-form').addClass('hide');
+        $('.profile-container').addClass('hide');
       }
     });
 };
