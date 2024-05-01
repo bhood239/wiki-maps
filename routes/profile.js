@@ -18,8 +18,36 @@ router.get('/', (req, res) => {
 
   if (req.session && req.session.userId) {
     userId = req.session.userId;
-  } else if (req.id) {
-    userId = req.data.id;
+  } else {
+    return res.status(400).send({ error: "User ID not provided" });
+  }
+
+  database
+    .getUserDataWithId(userId)
+    .then((user) => {
+      if (!user) {
+        return res.send({ error: "no user with that id" });
+      }
+      console.log('userData', user);
+      res.send({
+        name: user.name,
+        image: user.image,
+        favMapsCount: user.favMapsCount,
+        conMapsCount: user.conMapsCount,
+        favMaps: user.favMaps,
+        conMaps: user.conMaps
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// load profile with id
+router.get('/:id', (req, res) => {
+  let userId;
+  if (req.params.id) {
+    userId = req.params.id;
   } else {
     return res.status(400).send({ error: "User ID not provided" });
   }

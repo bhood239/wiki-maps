@@ -11,11 +11,11 @@ const createMap = (userId, name, description, lat, lng) => {
 
 //READ ONE
 const getMapById = (id) => {
-  return db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = $1', [id])
+  return db.query('SELECT * FROM maps WHERE maps.id = $1', [id])
     .then(data => {
       return data.rows;
     })
-    .catch(() => db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = 1')
+    .catch(() => db.query('SELECT * FROM maps WHERE maps.id = 1')
       .then(data => {
         return data.rows;
       }));

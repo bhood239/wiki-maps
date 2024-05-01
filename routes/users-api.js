@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const userQueries = require('../db/queries/users');
 
 router.get('/', (req, res) => {
@@ -14,6 +14,21 @@ router.get('/', (req, res) => {
     .then(users => {
       res.json({ users });
     })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  console.log('id:',id);
+  userQueries.getUserWithId(id)
+  .then(user => {
+    console.log('user-->', user);
+    res.send(user);
+  })
     .catch(err => {
       res
         .status(500)

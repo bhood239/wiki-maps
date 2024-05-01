@@ -173,12 +173,14 @@ async function fetchMapCoords(id) {
       url: `api/maps/${id}`
     });
 
+
     // Check if map data is valid
     if (map && map.length > 0 && map[0].lat && map[0].lng) {
       const mapCoords = {
         lat: Number(map[0].lat),
         lng: Number(map[0].lng)
       };
+
       return mapCoords;
     } else {
       throw new Error('Invalid map data received');
@@ -195,6 +197,19 @@ async function initMap(id) {
   try {
     // Fetch map coordinates
     const mapCoords = await fetchMapCoords(id);
+
+    // Fetch creatorId
+    const creatorId = await fetchCreatorId(id)
+    console.log('creator id:---->', creatorId);
+    const creator = await fetchUserWithId(creatorId);
+    console.log('creator:------>', creator);
+    // clear the element to avoid duplicate maps
+    $('.creator').empty();
+    $('.creator').prepend(`<button class="creator-button">Creator:${creator}</button>`);
+    $('.creator-button').on('click', async function() {
+      const creatorId = await fetchCreatorId(id);
+      loadProfileWithId(creatorId);
+    });
 
     // Request needed library
     const { Map } = await google.maps.importLibrary("maps");
@@ -239,3 +254,62 @@ async function initMap(id) {
   }
 }
 
+const fetchCreatorId = async (mapId) => {
+  return $.get(`/api/maps/${mapId}`)
+  .then((res) => {
+    console.log('creatorId-->', res[0].creator_id);
+    return res[0].creator_id;
+  })
+};
+
+const fetchUserWithId = async (id) => {
+  return $.get(`/api/users/${id}`)
+  .then((res) => {
+    console.log('username:', res[0].username);
+    return res[0].username;
+  })
+};
+
+const loadProfileWithId = async (id) => {
+  $('.profile-container').removeClass('hide');
+  $('.map-container').toggleClass('hide');
+  $('#contributed-maps').addClass('hide');
+  $('.login-container').addClass('hide');
+
+  $.get(`/profile/${id}`)
+    .then((res) => {
+      // clear data before appending again
+      $('#profile-picture').empty();
+      $('#profile-name').empty();
+      $('#favourite-maps-count').empty();
+      $('#contributed-maps-count').empty();
+      $('#favourite-maps').empty();
+      $('#contributed-maps').empty();
+      // prepend image url to profile picture
+      $('#profile-picture').prepend(`<img src="${res.image}" alt="Profile Picture">`);
+      // prepend user name to profile name
+      $('#profile-name').prepend(`<h1>${res.name}</h1>`);
+      // prepend the number of favourite maps
+      $('#favourite-maps-count').append(`<p>${res.favMapsCount}</p>`);
+      // prepend the number of contributed maps
+      $('#contributed-maps-count').append(`<p>${res.conMapsCount}</p>`);
+      // Loop through favourite maps and append to list
+      if (res.favMaps) {
+        console.log(res.favMaps);
+        res.favMaps.forEach((map) => {
+          $('#favourite-maps').append(`<li>${map}</li>`);
+        });
+      }
+      // Loop through contributed maps and append to list
+      if (res.conMaps) {
+        res.conMaps.forEach((map) => {
+          $('#contributed-maps').append(`<li>${map}</li>`);
+        });
+      }
+      profileLoaded = true;
+    })
+    .catch((error) => {
+      console.error("Error loading profile:", error);
+      // Handle error, display error message, etc.
+    });
+};
