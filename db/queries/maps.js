@@ -12,10 +12,15 @@ const createMap = (userId, name, description, lat, lng) => {
 //READ ONE
 const getMapById = (id) => {
   return db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = $1', [id])
-  .then(data => {
-    return data.rows;
-  });
+    .then(data => {
+      return data.rows;
+    })
+    .catch(() => db.query('SELECT id, lat, lng, name, description FROM maps WHERE maps.id = 1')
+      .then(data => {
+        return data.rows;
+      }));
 };
+
 //READ ALL
 const getMapsList = () => {
   return db.query('SELECT id, lat, lng, name, description, creator_id FROM maps;'
