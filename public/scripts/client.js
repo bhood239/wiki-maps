@@ -20,6 +20,7 @@ $(() => {
     $('.login-container').addClass('hide');
     $('.profile-container').addClass('hide');
     $('.map-form-container').addClass('hide');
+    $('.edit-profile-container').addClass('hide');
     $('.map-container').removeClass('hide');
   });
 
