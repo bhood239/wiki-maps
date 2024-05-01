@@ -46,13 +46,13 @@ const getPins = () => {
 // UPDATE - Update an existing pin
 const updatePin = (pinData, pinId) => {
   // Destructure pinData object
-  const { lat, lng, map_id, title, description, image } = pinData;
+  const { title, description, image } = pinData;
 
   // Update the pin information in the pins table
   return db
     .query(
-      'UPDATE pins SET lat = $1, lng = $2, map_id = $3, title = $4, description = $5 WHERE id = $6 RETURNING *;',
-      [lat, lng, map_id, title, description, pinId]
+      'UPDATE pins SET title = $1, description = $2 WHERE id = $3 RETURNING *;',
+      [title, description, pinId]
     )
     .then(async (data) => {
       const updatedPin = data.rows[0]; // Get the updated pin information
@@ -62,8 +62,8 @@ const updatePin = (pinData, pinId) => {
         try {
           // Update or insert the image information into the images table
           await db.query(
-            'INSERT INTO images (pin_id, image_url) VALUES ($1, $2) ON CONFLICT (pin_id) DO UPDATE SET image_url = $2;',
-            [pinId, image]
+            'UPDATE images SET image_url = $1 WHERE pin_id = $2;',
+            [image, pinId]
           );
         } catch (error) {
           console.error('Error updating image:', error);

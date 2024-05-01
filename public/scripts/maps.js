@@ -1,7 +1,7 @@
 // map and pin generation functions
-
-let map; // Define map in a scope accessible to the event listener
+let map;
 let mapId;
+let marker;
 
 //LOAD CURRENT PINS FROM DATABASE
 // Function to add a pin to the map
@@ -10,7 +10,8 @@ async function addPin(map, pin) {
     lat: Number(pin.lat),
     lng: Number(pin.lng)
   }
-  const marker = new google.maps.Marker({ position, map });
+  marker = new google.maps.Marker({ position, map });
+  console.log(pin);
 
   // Check if content exists for InfoWindow
   if (pin) {
@@ -22,7 +23,7 @@ async function addPin(map, pin) {
         <p>${pin.description}</p>
         <div style='bottom: 0; right: 10px;'>
           <p>Added by: ${pin.username}</p>
-          <button type="button" onclick="editPin('${pin.id}')">Edit</button>
+          <button type="button" onclick="editPin(${pin.id})">Edit</button>
         </div>
       </div>`
     });
@@ -75,7 +76,7 @@ function handleMapClick(event) {
 
       if (map) {
         placeMarker(pinData, map);
-        createPinOnServer(map, pinData); // Ensure pinData structure matches server expectation
+        createPinOnServer(map, pinData);
         infoWindow.close(); // Close the info window after adding the pin
       } else {
         console.error('Map object is undefined.');
@@ -119,27 +120,44 @@ function createPinOnServer(map, pinData) {
 }
 
 //FUNCTIONS FOR USERS TO EDIT PINS
-// Function to handle editing the pin
+// Function to handle pin editing
 function editPin(pinId) {
+  console.log(pinId);
+  const infoWindowContent = `
+    <div style='padding: 10px;'>
+      <h1>Edit Pin</h1>
+      <label for="editTitle">Title:</label><br>
+      <input type="text" id="editTitle" "><br>
+      <label for="editDescription">Description:</label><br>
+      <textarea id="editDescription"></textarea><br><br>
+      <label for="editImage">Image URL:</label><br>
+      <textarea id="editImage"></textarea><br><br>
+      <button type="button" onclick="saveEditedPin('${pinId}')">Save</button>
+    </div>`;
+
+  // Update the InfoWindow content with the editable fields
+  const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
+  infoWindow.open(map, marker);
 }
 
 // Function to save the edited pin
 function saveEditedPin(pinId) {
+  const editedTitle = document.getElementById('editTitle').value;
+  const editedDescription = document.getElementById('editDescription').value;
+  const editedImage = document.getElementById('editImage').value;
 
   // Make an AJAX request to update the pin information
   $.ajax({
     method: 'POST',
-    url: `/api/pins/${pinId}`, // Assuming your route handles updating by ID
+    url: `/api/pins/${pinId}`,
     contentType: 'application/json',
     data: JSON.stringify({
-      title: updatedTitle,
-      description: updatedDescription,
-      image: updatedImage
+      title: editedTitle,
+      description: editedDescription,
+      image: editedImage
     }),
     success: function(response) {
       console.log('Pin updated successfully:', response);
-      // Update the displayed pin with the updated values
-      // For example, update pinTitle.innerText and pinDescription.innerText
     },
     error: function(error) {
       console.error('Error updating pin:', error);
@@ -201,7 +219,7 @@ async function initMap(id) {
           const latNum = parseFloat(pin.lat);
           const lngNum = parseFloat(pin.lng);
 
-          addPin(map, { lat: latNum, lng: lngNum, title: pin.title, description: pin.description, image: pin.image, username: pin.username });
+          addPin(map, { id: pin.id, lat: latNum, lng: lngNum, title: pin.title, description: pin.description, image: pin.image, username: pin.username });
         }
       } else {
         console.error('Failed to load pins: Invalid response format');

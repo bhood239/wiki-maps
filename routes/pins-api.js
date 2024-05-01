@@ -65,13 +65,11 @@ router.post('/:id', async (req, res) => {
   }
 
   const pinId = req.params.id;
-  const { lat, lng, map_id, title, description, image } = req.body;
-  if (lat == null || lng == null) { // Checking for null or undefined
-    return res.status(400).json({ error: 'Latitude and longitude are required.' });
-  }
+  const { title, description, image } = req.body;
+  console.log(title, description, image);
 
   try {
-    const updatedPin = await pinsQueries.updatePin({ lat, lng, map_id, title, description, image }, pinId);
+    const updatedPin = await pinsQueries.updatePin({ title, description, image }, pinId);
     res.status(200).json(updatedPin); // Send back the updated pin as JSON response
   } catch (error) {
     console.error('Error updating pin:', error);
