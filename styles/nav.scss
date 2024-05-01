@@ -35,6 +35,7 @@ nav {
   position: fixed;
   list-style-type: none;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  z-index: 1000;
   li {
     display: flex;
     justify-content: space-between;
