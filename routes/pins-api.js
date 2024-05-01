@@ -57,18 +57,25 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-//UPDATE - POST /:id
-router.post('/:id', (req, res) => {
+// UPDATE - POST /:id
+router.post('/:id', async (req, res) => {
   if (!validCookies.includes(req.session.user)) {
     res.status(405).send('Not authorized');
     return;
   }
 
-  console.log(req.body);
-  res.json({
-    message: 'pin updated'
-  })
-})
+  const pinId = req.params.id;
+  const { title, description, image } = req.body;
+  console.log(title, description, image);
+
+  try {
+    const updatedPin = await pinsQueries.updatePin({ title, description, image }, pinId);
+    res.status(200).json(updatedPin); // Send back the updated pin as JSON response
+  } catch (error) {
+    console.error('Error updating pin:', error);
+    res.status(500).json({ error: 'Failed to update pin' });
+  }
+});
 
 //DELETE - POST /:id/delete
 router.post('/:id/delete', (req, res) => {
