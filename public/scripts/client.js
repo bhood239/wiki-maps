@@ -217,15 +217,16 @@ function loadProfile() {
   $('.map-container').toggleClass('hide');
   $('#contributed-maps').addClass('hide');
 
-  // to avoid duplicate load
-  if (profileLoaded) {
-    // Profile data is already loaded, do not load again
-    return;
-  }
-
   // const id = this.id;
   $.get('/profile')
     .then((res) => {
+      // clear data before appending again
+      $('#profile-picture').empty();
+      $('#profile-name').empty();
+      $('#favourite-maps-count').empty();
+      $('#contributed-maps-count').empty();
+      $('#favourite-maps').empty();
+      $('#contributed-maps').empty();
       // prepend image url to profile picture
       $('#profile-picture').prepend(`<img src="${res.image}" alt="Profile Picture">`);
       // prepend user name to profile name
@@ -247,7 +248,6 @@ function loadProfile() {
           $('#contributed-maps').append(`<li>${map}</li>`);
         });
       }
-      profileLoaded = true;
     })
     .catch((error) => {
       console.error("Error loading profile:", error);
