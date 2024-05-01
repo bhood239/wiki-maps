@@ -200,9 +200,7 @@ async function initMap(id) {
 
     // Fetch creatorId
     const creatorId = await fetchCreatorId(id)
-    console.log('creator id:---->', creatorId);
     const creator = await fetchUserWithId(creatorId);
-    console.log('creator:------>', creator);
     // clear the element to avoid duplicate maps
     $('.creator').empty();
     $('.creator').prepend(`<button class="creator-button">Creator:${creator}</button>`);
@@ -257,7 +255,6 @@ async function initMap(id) {
 const fetchCreatorId = async (mapId) => {
   return $.get(`/api/maps/${mapId}`)
   .then((res) => {
-    console.log('creatorId-->', res[0].creator_id);
     return res[0].creator_id;
   })
 };
@@ -265,7 +262,6 @@ const fetchCreatorId = async (mapId) => {
 const fetchUserWithId = async (id) => {
   return $.get(`/api/users/${id}`)
   .then((res) => {
-    console.log('username:', res[0].username);
     return res[0].username;
   })
 };
@@ -306,7 +302,6 @@ const loadProfileWithId = async (id) => {
           $('#contributed-maps').append(`<li>${map}</li>`);
         });
       }
-      profileLoaded = true;
     })
     .catch((error) => {
       console.error("Error loading profile:", error);
