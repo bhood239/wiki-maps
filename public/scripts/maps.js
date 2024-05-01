@@ -22,6 +22,7 @@ async function addPin(map, pin) {
         <p>${pin.description}</p>
         <div style='bottom: 0; right: 10px;'>
           <p>Added by: ${pin.username}</p>
+          <button type="button" onclick="editPin('${pin.id}')">Edit</button>
         </div>
       </div>`
     });
@@ -99,8 +100,8 @@ function createPinOnServer(map, pinData) {
   $.ajax({
     method: 'POST',
     url: '/api/pins',
-    contentType: 'application/json', // This tells the server to expect JSON data
-    data: JSON.stringify(pinData), // Ensure data is properly stringified
+    contentType: 'application/json',
+    data: JSON.stringify(pinData),
     success: function(response) {
       console.log('Pin created on the server:', response);
       addPin(map, pinData);
@@ -113,6 +114,35 @@ function createPinOnServer(map, pinData) {
       if (error.responseJSON) {
         console.log('Response JSON:', error.responseJSON);
       }
+    }
+  });
+}
+
+//FUNCTIONS FOR USERS TO EDIT PINS
+// Function to handle editing the pin
+function editPin(pinId) {
+}
+
+// Function to save the edited pin
+function saveEditedPin(pinId) {
+
+  // Make an AJAX request to update the pin information
+  $.ajax({
+    method: 'POST',
+    url: `/api/pins/${pinId}`, // Assuming your route handles updating by ID
+    contentType: 'application/json',
+    data: JSON.stringify({
+      title: updatedTitle,
+      description: updatedDescription,
+      image: updatedImage
+    }),
+    success: function(response) {
+      console.log('Pin updated successfully:', response);
+      // Update the displayed pin with the updated values
+      // For example, update pinTitle.innerText and pinDescription.innerText
+    },
+    error: function(error) {
+      console.error('Error updating pin:', error);
     }
   });
 }
