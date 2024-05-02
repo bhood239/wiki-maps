@@ -1,10 +1,14 @@
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
+
 #login-form {
   height: 200px;
   top: 120px;
+  font-family: $logo-font;
 
   div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 

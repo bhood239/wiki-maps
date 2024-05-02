@@ -1,5 +1,7 @@
 // See: https://sass-lang.com/
 
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
 
 .creator {
 
@@ -13,23 +15,27 @@
 }
 
 .user-options {
+  font-family: $logo-font;
+  font-size: 40px;
+  color: azure;
   display: none;
-  position: absolute;
-  top: 60px;
-  width: 80%;
+  width: 40vw;
+  height: 100vh;
+  top: 10vh;
   right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  list-style-type: none;
   z-index: 1000;
+  overflow-y: auto;
 
   p {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: burlywood;
-    margin: 0;
 
     &:hover {
-      background-color: blanchedalmond;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: black;
     }
   }
 }
@@ -62,15 +68,23 @@
 
 .btn-log-reg-container {
   top: 100 px;
+  width: 10vw;
 
   div {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
   }
 }
 
 .login-container {
-  padding: 60px;
+  font-family: $logo-font;
+  font-size: 40px;
+  color: azure;
+  width: 20vw;
+  top: 3%;
+  right: 0;
+  position: fixed;
+  z-index: 1000;
 }
 
 .map-form-container {
@@ -79,4 +93,19 @@
 
 .edit-profile-container {
   padding: 60px;
+}
+
+.btn-login {
+  font-family: $logo-font;
+  font-size: 20px;
+  background-color:#9fb6c3;
+}
+.btn-reg {
+  font-family: $logo-font;
+  font-size: 20px;
+  background-color:#9fb6c3;
+}
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
 }
