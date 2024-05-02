@@ -158,6 +158,7 @@ function saveEditedPin(pinId) {
     }),
     success: function(response) {
       console.log('Pin updated successfully:', response);
+      initMap(mapId);
     },
     error: function(error) {
       console.error('Error updating pin:', error);
