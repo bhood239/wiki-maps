@@ -110,6 +110,7 @@ $logo-font: "Barlow Condensed", sans-serif;
 }
 
 .btn-login {
+  cursor: pointer;
   font-family: $logo-font;
   font-size: 20px;
   background-color:#9fb6c3;
@@ -118,6 +119,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   border: none;
 }
 .btn-reg {
+  cursor: pointer;
   font-family: $logo-font;
   font-size: 20px;
   background-color:#9fb6c3;
