@@ -1,3 +1,6 @@
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
+
 #register-form {
   height: 200px;
   top: 120px;
@@ -7,6 +10,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: $logo-font;
 
+    button {
+      font-family: $logo-font;
+      font-size: 20px;
+      background-color:#9fb6c3;
+      color: white;
+      outline: none;
+      border: none;
+    }
   }
 }

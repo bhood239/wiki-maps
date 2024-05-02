@@ -1,19 +1,31 @@
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
+
 #login-form {
   height: 200px;
   top: 120px;
+  font-family: $logo-font;
 
   div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: $logo-font;
 
     div {
       display: flex;
       flex-direction: row;
+      font-family: $logo-font;
+      font-size: 40px;
 
       button {
-        margin: 0 15px 0 15px;
+        font-family: $logo-font;
+        font-size: 40px;
+        background-color:#9fb6c3;
+        color: white;
+        outline: none;
+        border: none;
       }
     }
   }
