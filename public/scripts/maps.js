@@ -204,7 +204,7 @@ async function initMap(id) {
     const creator = await fetchUserWithId(creatorId);
     // clear the element to avoid duplicate maps
     $('.creator').empty();
-    $('.creator').prepend(`<button class="creator-button">Creator:${creator}</button>`);
+    $('.creator').prepend(`<button class="creator-button">Creator: ${creator}</button>`);
     $('.creator-button').on('click', async function() {
       const creatorId = await fetchCreatorId(id);
       loadProfileWithId(creatorId);
