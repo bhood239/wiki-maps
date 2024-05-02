@@ -4,12 +4,13 @@ $logo-font: "Barlow Condensed", sans-serif;
 nav {
   position: fixed;
   display: flex;
-  height: 10vh;
+  height: 15vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
   background-color:#9fb6c3;
   top: 0;
+  left: 0;
   .menu {
     position: fixed;
     left: 30px;
@@ -30,8 +31,6 @@ nav {
     cursor: pointer;
   }
 }
-
-
 
 .menu-items {
   font-family: $logo-font;
@@ -61,6 +60,22 @@ nav {
       // display: none;
       cursor: pointer;
     }
+  }
+}
+
+
+@media only screen and (min-width: 1024px) { // Laptop and up
+  nav .menu {
+    display: none;
+  }
+
+  .menu-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 450px;
+    top: 11.5vh;
   }
 }
 
