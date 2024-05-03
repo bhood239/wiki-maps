@@ -34,21 +34,27 @@ $logo-font: "Barlow Condensed", sans-serif;
 @media only screen and (min-width: 1024px) {
   #login-form {
     font-size: 20px;
+    z-index: inherit;
+
 
     div {
       font-size: inherit;
       transform: translate(0px, 2vh);
+      z-index: inherit;
       div {
         font-size: inherit;
-
+        z-index: inherit;
         button {
           font-size: 30px;
           transform: translate(150px, -10vh);
+          z-index: inherit;
         }
       }
 
       input {
+
         font-size: inherit;
+        z-index: inherit;
       }
     }
   }

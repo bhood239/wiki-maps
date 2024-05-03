@@ -13,3 +13,28 @@
     }
   }
 }
+
+@media only screen and (min-width: 1024px) {
+  .edit-profile-container{
+    position: fixed;
+    top: 0;
+    z-index: 1500;
+    background-color:white;
+    border: 5px solid #9fb6c3;
+    transform: translate(40vw, 0px);
+
+    #edit-profile-form {
+      z-index: inherit;
+
+      div {
+        z-index:inherit;
+
+        button {
+          z-index: inherit;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+}
