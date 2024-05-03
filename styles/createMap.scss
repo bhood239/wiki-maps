@@ -29,4 +29,19 @@ $logo-font: "Barlow Condensed", sans-serif;
   font-family: $logo-font;
   font-size: 40px;
 }
+@media only screen and (min-width: 1024px) {
+  #map-form {
+    background-color: #9fb6c3;
+    border: 5px solid #9fb6c3;
+    boder-bottom: 20px solid #9fb6c3;
+    height: auto;
+    #name {
+      border: 5px solid #9fb6c3;
+    }
 
+    input {
+      border: 10px solid #9fb6c3;
+    }
+  }
+
+}
