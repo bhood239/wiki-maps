@@ -93,7 +93,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 0;
+  z-index: 15;
 }
 
 .map-form-container {
@@ -130,13 +130,13 @@ $logo-font: "Barlow Condensed", sans-serif;
 @media only screen and (min-width: 1024px) { // Laptop and up
   .login-container {
     display: flex;
-    top: -80px;
-    right: 100px;
+    top: -88px;
+    right: 150px;
     transform: unset;
     left: unset;
     width: 300px;
-    font-size: unset;
-    z-index: 0;
+    font-size: 20px;
+    z-index: 3000;
   }
 
   .btn-log-reg-container div {

@@ -12,7 +12,7 @@ $logo-font: "Barlow Condensed", sans-serif;
     justify-content: center;
     align-items: center;
     font-family: $logo-font;
-    
+
       button {
         font-family: $logo-font;
         font-size: 40px;
@@ -20,14 +20,19 @@ $logo-font: "Barlow Condensed", sans-serif;
         color: white;
         outline: none;
         border: none;
-        
+
           @media only screen and (min-width: 1024px) {
-          transform:translate(0px, -15px);
+          transform: translate(150px, -113px);
+          font-size: 30px;
         }
       }
       input {
         font-family: $logo-font;
         font-size: 40px;
+
+        @media only screen and (min-width: 1024px) {
+          font-size: 20px;
+        }
       }
   }
 }

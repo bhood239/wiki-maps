@@ -13,30 +13,42 @@ $logo-font: "Barlow Condensed", sans-serif;
     justify-content: center;
     align-items: center;
     font-family: $logo-font;
-      button {
-        cursor: pointer;
-        font-family: $logo-font;
-        font-size: 40px;
-        background-color:#9fb6c3;
-        color: white;
-        outline: none;
-        border: none;
-      }
-      input {
-        font-family: $logo-font;
-        font-size: 40px;
-      }
+
+    button {
+      cursor: pointer;
+      font-family: $logo-font;
+      font-size: 40px;
+      background-color: #9fb6c3;
+      color: white;
+      outline: none;
+      border: none;
+    }
+
+    input {
+      font-family: $logo-font;
+      font-size: 40px;
+    }
   }
 }
+
 @media only screen and (min-width: 1024px) {
   #login-form {
     font-size: 20px;
+
     div {
+      font-size: inherit;
+      transform: translate(0px, 2vh);
       div {
         font-size: inherit;
+
         button {
-          font-size: inherit;
+          font-size: 30px;
+          transform: translate(150px, -10vh);
         }
+      }
+
+      input {
+        font-size: inherit;
       }
     }
   }
