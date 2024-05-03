@@ -13,6 +13,7 @@ $logo-font: "Barlow Condensed", sans-serif;
     align-items: center;
     font-family: $logo-font;
       button {
+        cursor: pointer;
         font-family: $logo-font;
         font-size: 40px;
         background-color:#9fb6c3;
@@ -24,5 +25,18 @@ $logo-font: "Barlow Condensed", sans-serif;
         font-family: $logo-font;
         font-size: 40px;
       }
+  }
+}
+@media only screen and (min-width: 1024px) {
+  #login-form {
+    font-size: 20px;
+    div {
+      div {
+        font-size: inherit;
+        button {
+          font-size: inherit;
+        }
+      }
+    }
   }
 }
