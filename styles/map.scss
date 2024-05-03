@@ -4,3 +4,15 @@
   margin-top: 10vh;
   z-index: 0;
 }
+
+@media only screen and (min-width: 1024px) { // Laptop and up
+  .map-container {
+    display: flex;
+    position:fixed;
+    top: 11.5vh;
+    right: 0;
+    bottom: 0;
+    width: calc(100vw - 500px);
+    align-items: center;
+  }
+}
