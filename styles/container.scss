@@ -8,7 +8,7 @@ $logo-font: "Barlow Condensed", sans-serif;
     height: 40px;
     position: absolute;
     top: 17vh;
-    right: 70px;
+    right: 100px;
     cursor: pointer;
     z-index: 999;
     font-family: "Roboto", sans-serif;
@@ -32,11 +32,13 @@ $logo-font: "Barlow Condensed", sans-serif;
   background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
   list-style-type: none;
-  z-index: 1000;
+  z-index: 5000;
   overflow-y: auto;
+
   p {
     display: flex;
     justify-content: center;
+
     &:hover {
       background-color: rgba(255, 255, 255, 0.9);
       color: black;
@@ -51,6 +53,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   top: 120px;
   right: 0;
   z-index: 1000;
+
   p {
     display: flex;
     justify-content: center;
@@ -58,6 +61,7 @@ $logo-font: "Barlow Condensed", sans-serif;
     font-family: Arial, Helvetica, sans-serif;
     background-color: gray;
     margin: 0;
+
     &:hover {
       background-color: blanchedalmond;
     }
@@ -108,28 +112,48 @@ $logo-font: "Barlow Condensed", sans-serif;
   cursor: pointer;
   font-family: $logo-font;
   font-size: 40px;
-  background-color:#9fb6c3;
+  background-color: #9fb6c3;
   color: white;
   outline: none;
   border: none;
 }
+
 .btn-reg {
   cursor: pointer;
   font-family: $logo-font;
   font-size: 40px;
-  background-color:#9fb6c3;
+  background-color: #9fb6c3;
   color: white;
   outline: none;
   border: none;
 }
+
 .login-buttons {
   height: 20vh;
   justify-content: space-between;
 }
 
-@media only screen and (min-width: 1024px) { // Laptop and up
+@media only screen and (min-width: 1024px) {
+
+  // Laptop and up
+  .creator {
+    button {
+      height: 40px;
+      position: absolute;
+      top: 12vh;
+      right: 20px;
+      cursor: pointer;
+      z-index: 4001;
+      font-family: "Roboto", sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      background-color: white;
+      outline: none;
+      border: none;
+    }
+  }
+
   .login-container {
-    display: flex;
     top: -88px;
     right: 150px;
     transform: unset;
