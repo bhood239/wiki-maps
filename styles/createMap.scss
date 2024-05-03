@@ -1,20 +1,32 @@
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
+
 #map-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 200px;
-  top: 120px;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    div {
-      display: flex;
-      flex-direction: row;
-
-      button {
-        margin: 0 15px 0 15px;
-      }
-    }
-  }
+  font-family: $logo-font;
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Additional styles for button and input */
+#map-form button {
+  font-family: $logo-font;
+  font-size: 40px;
+  background-color: #9fb6c3;
+  color: white;
+  outline: none;
+  border: none;
+}
+
+#map-form input {
+  font-family: $logo-font;
+  font-size: 40px;
+}
+

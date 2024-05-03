@@ -1,7 +1,11 @@
+//common style variables
+$logo-font: "Barlow Condensed", sans-serif;
+
 .profile-container {
-  margin-top: 60px;
+  margin-top: 12vh;
   position: relative;
   width: 100%;
+  z-index: 50;
 }
 
 .header {
@@ -11,8 +15,9 @@
   justify-content: center;
   height: 200px;
   width: 100%;
-  background-color: #ed8d00;
+  background-color:#9fb6c3;
   background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+  z-index: 50;
 }
 
 #profile-picture {
@@ -23,7 +28,8 @@
 }
 
 #profile-name {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $logo-font;
+  font-size: 30px;
   padding: 5px;
 }
 
@@ -31,11 +37,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: #e88100 2px solid;
+  border: #9fb6c3 2px solid;
   height: 50px;
   margin-top: 2px;
   margin-bottom: 2px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: $logo-font;
+  font-size: 20px;
+  z-index: 50;
 
   label {
     display: flex;
@@ -48,7 +56,7 @@
       width: 20px;
       margin: 10px;
       height: 20px;
-      border: #e88100 1px solid;
+      border: #9fb6c3 1px solid;
     }
 
     #fav-maps {
@@ -62,7 +70,7 @@
       width: 20px;
       margin: 10px;
       height: 20px;
-      border: #e88100 1px solid;
+      border: #9fb6c3 1px solid;
     }
 
     #con-maps {
@@ -87,7 +95,7 @@
     justify-content: center;
     padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: sandybrown;
+    background-color: #9fb6c3;
     margin: 0;
 
     &:hover {
@@ -104,7 +112,7 @@
     justify-content: center;
     padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: sandybrown;
+    background-color: #9fb6c3;
     margin: 0;
 
     &:hover {

@@ -4,7 +4,6 @@
 $logo-font: "Barlow Condensed", sans-serif;
 
 .creator {
-
   button {
     height: 40px;
     position: absolute;
@@ -35,11 +34,9 @@ $logo-font: "Barlow Condensed", sans-serif;
   list-style-type: none;
   z-index: 1000;
   overflow-y: auto;
-
   p {
     display: flex;
     justify-content: center;
-
     &:hover {
       background-color: rgba(255, 255, 255, 0.9);
       color: black;
@@ -54,7 +51,6 @@ $logo-font: "Barlow Condensed", sans-serif;
   top: 120px;
   right: 0;
   z-index: 1000;
-
   p {
     display: flex;
     justify-content: center;
@@ -62,7 +58,6 @@ $logo-font: "Barlow Condensed", sans-serif;
     font-family: Arial, Helvetica, sans-serif;
     background-color: gray;
     margin: 0;
-
     &:hover {
       background-color: blanchedalmond;
     }
@@ -111,7 +106,7 @@ $logo-font: "Barlow Condensed", sans-serif;
 
 .btn-login {
   font-family: $logo-font;
-  font-size: 20px;
+  font-size: 40px;
   background-color:#9fb6c3;
   color: white;
   outline: none;
@@ -119,7 +114,7 @@ $logo-font: "Barlow Condensed", sans-serif;
 }
 .btn-reg {
   font-family: $logo-font;
-  font-size: 20px;
+  font-size: 40px;
   background-color:#9fb6c3;
   color: white;
   outline: none;
