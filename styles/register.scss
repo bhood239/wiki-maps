@@ -20,6 +20,10 @@ $logo-font: "Barlow Condensed", sans-serif;
       color: white;
       outline: none;
       border: none;
+
+      @media only screen and (min-width: 1024px) {
+        transform:translate(0px, -15px);
+      }
     }
   }
 }

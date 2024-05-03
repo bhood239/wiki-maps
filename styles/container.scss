@@ -131,3 +131,33 @@ $logo-font: "Barlow Condensed", sans-serif;
   height: 20vh;
   justify-content: space-between;
 }
+
+@media only screen and (min-width: 1024px) { // Laptop and up
+  .login-container {
+    display: flex;
+    top: -80px;
+    right: 100px;
+    transform: unset;
+    left: unset;
+    width: 300px;
+    font-size: unset;
+
+  }
+
+  .btn-log-reg-container div {
+    flex-direction: row;
+  }
+
+  .login-buttons {
+    height: 10vh;
+  }
+
+  .btn-login {
+    font-size: 30px;
+  }
+
+  .btn-reg {
+    font-size: 30px;
+  }
+
+}
