@@ -8,8 +8,6 @@ $(() => {
   checkLoggedIn()
     .then((isLoggedIn) => {
       if (isLoggedIn) {
-        console.log('isLoggedIn');
-        $('.heart').show();
         $('.edit-logo').show();
         heartIcon();
       }
@@ -117,6 +115,14 @@ const heartIcon = () => {
 
 // Function to load maps in the menu options
 function loadMaps() {
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+
+      if (isLoggedIn) {
+        console.log('loadmaps');
+        $('.heart').show('inline-block');
+      }
+    });
   // clear the element to avoid duplicate maps
   $('.menu-items').empty();
   // Make Ajax GET request
@@ -128,6 +134,7 @@ function loadMaps() {
     .catch((err) => {
       console.log(err);
     });
+
 }
 
 const renderMaps = (maps) => {

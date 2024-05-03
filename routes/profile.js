@@ -78,8 +78,8 @@ router.post('/', async (req, res) => {
   const userId = req.session.userId;
   const { profile_photo, username, password } = req.body;
 
-  if (!username || password === "") {
-    res.status(400).send("Username and/or password cannot be empty");
+  if (!profile_photo || username || password === "") {
+    res.status(400).send("Username and/or Password and/or Profile photo cannot be empty");
     return;
   }
 
