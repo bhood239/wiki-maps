@@ -8,7 +8,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   button {
     height: 40px;
     position: absolute;
-    top: 11vh;
+    top: 17vh;
     right: 70px;
     cursor: pointer;
     z-index: 999;
@@ -98,7 +98,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 0;
 }
 
 .map-form-container {
@@ -141,7 +141,7 @@ $logo-font: "Barlow Condensed", sans-serif;
     left: unset;
     width: 300px;
     font-size: unset;
-
+    z-index: 0;
   }
 
   .btn-log-reg-container div {

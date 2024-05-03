@@ -5,6 +5,7 @@ $logo-font: "Barlow Condensed", sans-serif;
   height: 200px;
   top: 120px;
   font-family: $logo-font;
+  z-index: 20;
 
   div {
     display: flex;
