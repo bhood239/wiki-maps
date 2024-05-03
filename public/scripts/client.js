@@ -117,7 +117,6 @@ const heartIcon = () => {
 function loadMaps() {
   checkLoggedIn()
     .then((isLoggedIn) => {
-
       if (isLoggedIn) {
         console.log('loadmaps');
         $('.heart').show('inline-block');
