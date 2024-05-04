@@ -89,7 +89,6 @@ $logo-font: "Barlow Condensed", sans-serif;
   font-size: 40px;
   color: azure;
   width: 600px;
-  height: 40vh;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -152,17 +151,17 @@ $logo-font: "Barlow Condensed", sans-serif;
       border: none;
     }
   }
-
   .login-container {
-    top: -88px;
+    top: 30px;
     right: 150px;
     transform: unset;
     left: unset;
     width: 300px;
     font-size: 20px;
     z-index: 1400;
+}
 
-  }
+
 
   .btn-log-reg-container div {
     flex-direction: row;
