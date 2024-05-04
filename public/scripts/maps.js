@@ -127,8 +127,11 @@ function createPinOnServer(map, pinData) {
 //FUNCTIONS FOR USERS TO EDIT PINS
 // Function to handle pin editing
 function editPin(pinId) {
-  console.log(pinId);
-  const infoWindowContent = `
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        console.log(pinId);
+        const infoWindowContent = `
     <div style='padding: 10px;'>
       <h1>Edit Pin</h1>
       <label for="editTitle">Title:</label><br>
@@ -140,9 +143,12 @@ function editPin(pinId) {
       <button type="button" onclick="saveEditedPin('${pinId}')">Save</button>
     </div>`;
 
-  // Update the InfoWindow content with the editable fields
-  const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
-  infoWindow.open(map, marker);
+        // Update the InfoWindow content with the editable fields
+        const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
+        infoWindow.open(map, marker);
+      }
+    });
+
 }
 
 // Function to save the edited pin
