@@ -206,6 +206,7 @@ async function initMap(id) {
     // clear the element to avoid duplicate maps
     $('.creator').empty();
     $('.creator').prepend(`<button class="creator-button">Creator: ${creator}</button>`);
+    $('.description').empty();
     $('.description').prepend(`<div>Description: ${description}</div>`)
     $('.creator-button').on('click', async function() {
       const creatorId = await fetchCreatorId(id);
