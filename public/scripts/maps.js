@@ -200,11 +200,13 @@ async function initMap(id) {
     const mapCoords = await fetchMapCoords(id);
 
     // Fetch creatorId
-    const creatorId = await fetchCreatorId(id)
+    const creatorId = await fetchCreatorId(id);
+    const description = await fetchDescriptionWithId(id);
     const creator = await fetchUserWithId(creatorId);
     // clear the element to avoid duplicate maps
     $('.creator').empty();
     $('.creator').prepend(`<button class="creator-button">Creator: ${creator}</button>`);
+    $('.description').prepend(`<div>Description: ${description}</div>`)
     $('.creator-button').on('click', async function() {
       const creatorId = await fetchCreatorId(id);
       loadProfileWithId(creatorId);
@@ -259,6 +261,14 @@ const fetchCreatorId = async (mapId) => {
     return res[0].creator_id;
   })
 };
+
+const fetchDescriptionWithId = async (mapId) => {
+  return $.get(`/api/maps/${mapId}`)
+  .then((res) => {
+    return res[0].description;
+  })
+};
+
 
 const fetchUserWithId = async (id) => {
   return $.get(`/api/users/${id}`)

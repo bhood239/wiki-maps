@@ -20,6 +20,22 @@ $logo-font: "Barlow Condensed", sans-serif;
   }
 }
 
+.description {
+  height: 50px;
+  width: 500px;
+  position: absolute;
+  top: 660px;
+  left: 20px;
+  cursor: pointer;
+  z-index: 4001;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: azure;
+  outline: none;
+  border: none;
+}
+
 .user-options {
   font-family: $logo-font;
   font-size: 40px;
