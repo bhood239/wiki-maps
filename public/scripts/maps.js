@@ -38,9 +38,12 @@ async function addPin(map, pin) {
 // SCRIPT FOR USERS TO ADD PINS
 // Function to handle map click
 function handleMapClick(event) {
-  try {
-    // Create an info window with input fields for image URL, title, and description
-    const infoWindowContent = `
+  checkLoggedIn()
+    .then((isLoggedIn) => {
+      if (isLoggedIn) {
+        try {
+          // Create an info window with input fields for image URL, title, and description
+          const infoWindowContent = `
       <div>
         <label for="imageUrl">Image URL:</label><br>
         <input type="text" id="imageUrl" name="imageUrl"><br>
@@ -52,39 +55,41 @@ function handleMapClick(event) {
       </div>
     `;
 
-    const infoWindow = new google.maps.InfoWindow({
-      content: infoWindowContent,
-      position: event.latLng,
-    });
+          const infoWindow = new google.maps.InfoWindow({
+            content: infoWindowContent,
+            position: event.latLng,
+          });
 
-    infoWindow.open(map);
+          infoWindow.open(map);
 
-    // Function to add pin using data from the info window
-    window.addPinFromInfoWindow = function() {
-      const imageUrl = document.getElementById('imageUrl').value;
-      const title = document.getElementById('title').value;
-      const description = document.getElementById('description').value;
+          // Function to add pin using data from the info window
+          window.addPinFromInfoWindow = function() {
+            const imageUrl = document.getElementById('imageUrl').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
 
-      const pinData = {
-        lat: Number(event.latLng.lat()),
-        lng: Number(event.latLng.lng()),
-        map_id: mapId,
-        title: title || "Default Title",
-        description: description || "Default Description",
-        image: imageUrl || "https://http.cat/images/100.jpg"
-      };
+            const pinData = {
+              lat: Number(event.latLng.lat()),
+              lng: Number(event.latLng.lng()),
+              map_id: mapId,
+              title: title || "Default Title",
+              description: description || "Default Description",
+              image: imageUrl || "https://http.cat/images/100.jpg"
+            };
 
-      if (map) {
-        placeMarker(pinData, map);
-        createPinOnServer(map, pinData);
-        infoWindow.close(); // Close the info window after adding the pin
-      } else {
-        console.error('Map object is undefined.');
+            if (map) {
+              placeMarker(pinData, map);
+              createPinOnServer(map, pinData);
+              infoWindow.close(); // Close the info window after adding the pin
+            } else {
+              console.error('Map object is undefined.');
+            }
+          };
+        } catch (error) {
+          console.error('Error handling map click:', error);
+        }
       }
-    };
-  } catch (error) {
-    console.error('Error handling map click:', error);
-  }
+    });
 }
 
 // Function to add a new pin marker on the map
@@ -258,24 +263,24 @@ async function initMap(id) {
 
 const fetchCreatorId = async (mapId) => {
   return $.get(`/api/maps/${mapId}`)
-  .then((res) => {
-    return res[0].creator_id;
-  })
+    .then((res) => {
+      return res[0].creator_id;
+    })
 };
 
 const fetchDescriptionWithId = async (mapId) => {
   return $.get(`/api/maps/${mapId}`)
-  .then((res) => {
-    return res[0].description;
-  })
+    .then((res) => {
+      return res[0].description;
+    })
 };
 
 
 const fetchUserWithId = async (id) => {
   return $.get(`/api/users/${id}`)
-  .then((res) => {
-    return res[0].username;
-  })
+    .then((res) => {
+      return res[0].username;
+    })
 };
 
 const loadProfileWithId = async (id) => {
@@ -320,3 +325,14 @@ const loadProfileWithId = async (id) => {
       // Handle error, display error message, etc.
     });
 };
+
+function checkLoggedIn() {
+  return $.get('/check-login')
+    .then((res) => {
+      if (res) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+}
