@@ -79,11 +79,15 @@ The key features of WikiMaps include:
 - Ben Hood - https://github.com/bhood239
 
 ## Final Product Screenshots
+
 - Desktop views
+
 ![01-desktop-scroll](./lib/screenshots/01-desktop-scroll.gif)
 ![02-desktop-view-pin](./lib/screenshots/02-desktop-view-pin.gif)
 ![03-desktop-login](./lib/screenshots/03-desktop-login.gif)
 ![04-desktop-favorite](./lib/screenshots/04-desktop-favorite.gif)
+
 - Mobile views
+
 ![05-mobile-dropdown](./lib/screenshots/05-mobile-dropdown.gif)
 ![06-mobile-login](./lib/screenshots/06-mobile-login.gif)
